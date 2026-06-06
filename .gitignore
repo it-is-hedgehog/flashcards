@@ -1,0 +1,25 @@
+# Local progress files (each user's local localStorage backup)
+*backup*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Secrets (if any) — never commit
+.env
+*.token
+secrets/
+
+# Node (if we add any tooling later)
+node_modules/
+
+# Logs
+*.log
+
+# Python cache (if any)
+__pycache__/
+*.pyc

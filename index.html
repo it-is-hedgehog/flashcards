@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DSCards">
+  <meta name="theme-color" content="#2d5a8e" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1f2e" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>DS Cards — DSB4-7</title>
+</head>
+<body>
+
+<header id="topbar">
+  <button id="btn-back" class="icon-btn" hidden>←</button>
+  <h1 id="screen-title">DS Cards</h1>
+  <button id="btn-menu" class="icon-btn">☰</button>
+</header>
+
+<main id="app">
+
+  <!-- HOME: deck list -->
+  <section id="home" class="screen">
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-due">0</div>
+        <div class="stat-label">К повтору / due</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-new">0</div>
+        <div class="stat-label">Новых / new</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">Всего / total</div>
+      </div>
+    </div>
+
+    <button id="btn-study-all" class="btn-primary">
+      Учить всё / Study all
+      <span id="study-all-count" class="badge">0</span>
+    </button>
+
+    <h2>Колоды / Decks</h2>
+    <ul id="deck-list"></ul>
+  </section>
+
+  <!-- STUDY: card view -->
+  <section id="study" class="screen" hidden>
+    <div class="study-progress">
+      <span id="study-counter">1 / 0</span>
+      <span id="study-deck-name">—</span>
+    </div>
+
+    <div id="card" class="card">
+      <div class="card-side card-front">
+        <div class="card-label">ВОПРОС / question</div>
+        <div id="card-front-text" class="card-text"></div>
+        <button id="btn-show-answer" class="btn-primary">
+          Показать ответ / Show answer
+        </button>
+      </div>
+      <div class="card-side card-back" hidden>
+        <div class="card-label">ВОПРОС / question</div>
+        <div id="card-front-text-back" class="card-text muted"></div>
+        <hr>
+        <div class="card-label">ОТВЕТ / answer</div>
+        <div id="card-back-text" class="card-text"></div>
+        <div id="card-tags" class="card-tags"></div>
+
+        <div class="rate-row">
+          <button class="rate-btn rate-again" data-rate="1">
+            <div class="rate-emoji">😵</div>
+            <div class="rate-label">Забыл<br><small>Again</small></div>
+            <div class="rate-interval" data-int="1">&lt; 1 мин</div>
+          </button>
+          <button class="rate-btn rate-hard" data-rate="2">
+            <div class="rate-emoji">😐</div>
+            <div class="rate-label">Тяжело<br><small>Hard</small></div>
+            <div class="rate-interval" data-int="2">~1 д</div>
+          </button>
+          <button class="rate-btn rate-good" data-rate="3">
+            <div class="rate-emoji">🙂</div>
+            <div class="rate-label">Норм<br><small>Good</small></div>
+            <div class="rate-interval" data-int="3">~4 д</div>
+          </button>
+          <button class="rate-btn rate-easy" data-rate="4">
+            <div class="rate-emoji">😎</div>
+            <div class="rate-label">Легко<br><small>Easy</small></div>
+            <div class="rate-interval" data-int="4">~7 д</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="study-done" class="study-done" hidden>
+      <h2>Готово на сегодня!</h2>
+      <p class="muted">All done for today.</p>
+      <button id="btn-back-home" class="btn-primary">К колодам / To decks</button>
+    </div>
+  </section>
+
+  <!-- MENU: settings -->
+  <section id="menu" class="screen" hidden>
+    <h2>Меню / Menu</h2>
+
+    <div class="menu-block">
+      <h3>Тема / Theme</h3>
+      <div class="seg-control">
+        <label><input type="radio" name="theme" value="auto" checked><span>Авто / Auto</span></label>
+        <label><input type="radio" name="theme" value="light"><span>Светлая / Light</span></label>
+        <label><input type="radio" name="theme" value="dark"><span>Тёмная / Dark</span></label>
+      </div>
+    </div>
+
+    <div class="menu-block">
+      <h3>Карточки в день / Cards per day</h3>
+      <input type="number" id="daily-limit" min="5" max="200" value="30">
+      <p class="muted">Сколько карточек показывать в день (новые + due). Default: 30.</p>
+    </div>
+
+    <div class="menu-block">
+      <h3>Прогресс / Progress</h3>
+      <button id="btn-export" class="btn-secondary">Экспорт прогресса (JSON)</button>
+      <button id="btn-import" class="btn-secondary">Импорт прогресса</button>
+      <input type="file" id="import-file" accept=".json" hidden>
+      <button id="btn-reset" class="btn-danger">Сбросить прогресс / Reset</button>
+    </div>
+
+    <div class="menu-block">
+      <h3>Версия / Build</h3>
+      <p class="muted" id="version-text">v0.2 — 04.06.2026 (fix: hidden CSS, Hard learning step)</p>
+      <p class="muted">Карточек в колоде: <span id="version-cards">—</span></p>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>

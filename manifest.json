@@ -1,0 +1,20 @@
+{
+  "name": "DS Cards — DSB4-7",
+  "short_name": "DSCards",
+  "description": "Spaced repetition flashcards для DS-обучения в School 21",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1f2e",
+  "theme_color": "#2d5a8e",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
