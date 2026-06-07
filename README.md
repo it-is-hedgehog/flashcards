@@ -161,6 +161,12 @@ Service Worker автоматически подтянет новые карто
 
 ---
 
+## Live URL
+
+🔗 **https://it-is-hedgehog.github.io/flashcards/**
+
+GitHub Pages, HTTPS, deployable из ветки `main`.
+
 ## Лицензия
 
 Для личного использования Тимоса. Не для распространения.
