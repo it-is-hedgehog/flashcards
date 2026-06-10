@@ -435,11 +435,18 @@
   }
 
   function formatText(s) {
-    // экранируем + распознаём `code`, **bold**, переносы строк
-    let out = escapeHtml(s);
+    // сначала вырезаем ```блоки кода``` (внутри них переносы и ` не трогаем),
+    // потом экранируем + распознаём `code`, **bold**, переносы строк
+    const blocks = [];
+    let out = String(s).replace(/```\w*\n?([\s\S]*?)```/g, (m, code) => {
+      blocks.push('<pre><code>' + escapeHtml(code.replace(/\n+$/, '')) + '</code></pre>');
+      return '\u0000' + (blocks.length - 1) + '\u0000';
+    });
+    out = escapeHtml(out);
     out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
     out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     out = out.replace(/\n/g, '<br>');
+    out = out.replace(/\u0000(\d+)\u0000/g, (m, i) => blocks[+i]);
     return out;
   }
 
