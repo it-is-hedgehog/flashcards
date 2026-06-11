@@ -1,0 +1,1021 @@
+{
+ "version": "1.0",
+ "updated": "2026-06-11",
+ "entries": [
+  {
+   "id": "list",
+   "term": "list (список)",
+   "cat": "Python",
+   "aliases": [
+    "list"
+   ],
+   "what": "Упорядоченная изменяемая коллекция. Элементы лежат по порядку, доступ по номеру позиции (с 0).",
+   "analogy": "Грядка с рассадой: всё по порядку, можно добавить в конец, вытащить из середины, пересчитать.",
+   "example": "```\ncars = ['BMW', 'Ford', 'Audi']\ncars[0]          # 'BMW' — первый\ncars.append('VW')  # добавить в конец\nlen(cars)        # 4\n```",
+   "why": "В DS списки — сырьё: из них собирают Series и DataFrame.",
+   "see": [
+    "dict",
+    "for-loop"
+   ]
+  },
+  {
+   "id": "dict",
+   "term": "dict (словарь)",
+   "cat": "Python",
+   "aliases": [
+    "dict"
+   ],
+   "what": "Коллекция пар ключ → значение. Доступ не по номеру, а по ключу.",
+   "analogy": "Раздевалка с номерками (твоя мнемоника): номерок (ключ) → куртка (значение). Не важно, на какой вешалке висит — важен номерок.",
+   "example": "```\nfine = {'CarNumber': 'E432XX', 'Fines': 3200.0}\nfine['Fines']        # 3200.0 — по ключу\nfine['Year'] = 1995  # добавить пару\nfine.keys()          # все ключи\n```",
+   "why": "JSON из API — это словари. pandas строит DataFrame прямо из dict.",
+   "see": [
+    "list",
+    "read-json"
+   ]
+  },
+  {
+   "id": "range",
+   "term": "range",
+   "cat": "Python",
+   "aliases": [
+    "range"
+   ],
+   "what": "Генератор последовательности чисел: от старта до стопа, НЕ включая стоп.",
+   "analogy": "Лестничные пролёты: 'с 1 по 5 этаж' — поднялся на 4 пролёта, пятый этаж — граница, на ней остановился.",
+   "example": "```\nrange(5)        # 0,1,2,3,4 — пять чисел, без 5\nrange(2, 5)     # 2,3,4\nrange(0, 10, 2) # 0,2,4,6,8 — шаг 2\n```",
+   "why": "Правило 'стоп не включается' то же у среза list[2:5] и np.random.randint(1980, 2020) → до 2019.",
+   "see": [
+    "for-loop"
+   ]
+  },
+  {
+   "id": "for-loop",
+   "term": "цикл for",
+   "cat": "Python",
+   "aliases": [
+    "loop",
+    "for"
+   ],
+   "what": "Повторяет блок кода для каждого элемента коллекции по очереди.",
+   "analogy": "Конвейер: каждая деталь (элемент) проезжает мимо тебя, и ты делаешь с ней одно и то же действие.",
+   "example": "```\nfor car in ['BMW', 'Ford', 'Audi']:\n    print(car.upper())\n# BMW FORD AUDI — по одному за проход\n```",
+   "why": "В pandas явный for почти всегда можно заменить векторной операцией — она в сотни раз быстрее.",
+   "see": [
+    "range",
+    "apply"
+   ]
+  },
+  {
+   "id": "lambda",
+   "term": "lambda",
+   "cat": "Python",
+   "aliases": [
+    "lambda"
+   ],
+   "what": "Безымянная функция в одну строку. Объявляется на месте, там где нужна, без def.",
+   "analogy": "Стикер-записка вместо официального письма: быстро написал, использовал, выбросил. Имени не имеет.",
+   "example": "```\n# обычная функция\ndef double(x):\n    return x * 2\n\n# то же самое lambda\ndouble = lambda x: x * 2\n\n# главное применение — внутрь apply/sort\ndf['Fines'].apply(lambda x: x * 2)\n```",
+   "why": "В pandas lambda живёт внутри apply/agg/sort_values(key=...) — функция 'на один раз'.",
+   "see": [
+    "apply"
+   ]
+  },
+  {
+   "id": "import",
+   "term": "import / модуль",
+   "cat": "Python",
+   "aliases": [
+    "import",
+    "module"
+   ],
+   "what": "Подключает чужой код (модуль) в твой файл. Модуль — это просто .py файл с функциями.",
+   "analogy": "Ящик с инструментами: не таскаешь всё с собой — приносишь нужный ящик (import) и берёшь из него отвёртку (module.func).",
+   "example": "```\nimport pandas as pd     # весь модуль под псевдонимом\nfrom json import load   # одну функцию из модуля\n\npd.read_csv('data.csv') # обращение через псевдоним\n```",
+   "why": "Стандарт DS-псевдонимов: pandas→pd, numpy→np. Их понимают все.",
+   "see": [
+    "pip",
+    "namespace"
+   ]
+  },
+  {
+   "id": "venv",
+   "term": "venv (виртуальное окружение)",
+   "cat": "Python",
+   "aliases": [
+    "venv"
+   ],
+   "what": "Изолированная копия Python с собственным набором библиотек для одного проекта.",
+   "analogy": "Отдельная кухня под каждый ресторан: у каждого свои продукты и ножи. Испортил продукты в одной — другие кухни целы.",
+   "example": "```\npython3 -m venv venv        # создать\nsource venv/bin/activate    # включить (Linux)\npip install pandas          # ставится ТОЛЬКО сюда\ndeactivate                  # выйти\n```",
+   "why": "Разные проекты требуют разные версии библиотек — venv не даёт им конфликтовать.",
+   "see": [
+    "pip"
+   ]
+  },
+  {
+   "id": "pip",
+   "term": "pip",
+   "cat": "Python",
+   "aliases": [
+    "pip"
+   ],
+   "what": "Установщик пакетов Python: скачивает библиотеки из интернета (PyPI) и ставит в текущее окружение.",
+   "analogy": "Доставка продуктов на кухню: сказал что нужно — привезли и разложили.",
+   "example": "```\npip install pandas        # установить\npip list                  # что установлено\npip freeze > requirements.txt  # список версий проекта\n```",
+   "why": "requirements.txt — паспорт проекта: любой коллега развернёт твоё окружение одной командой.",
+   "see": [
+    "venv",
+    "import"
+   ]
+  },
+  {
+   "id": "generator",
+   "term": "generator / yield",
+   "cat": "Python",
+   "aliases": [
+    "generator",
+    "yield",
+    "lazy"
+   ],
+   "what": "Функция с yield вместо return: отдаёт значения ПО ОДНОМУ по запросу, а не всё сразу. Между запросами 'замирает' и помнит где остановилась.",
+   "analogy": "Твоя мнемоника: yield → 'ел драники' — драники едят по одному, не всю тарелку сразу. Generator = тарелочки по одной (память на КБ), обычная функция = вся кастрюля на стол (память на ГБ).",
+   "example": "```\ndef read_lines(path):\n    with open(path) as f:\n        for line in f:\n            yield line   # отдал одну — замер\n\nfor line in read_lines('huge.csv'):\n    ...  # файл на 10 ГБ, в памяти — 1 строка\n```",
+   "why": "Гигабайтные датасеты не влезают в память целиком — генераторы читают их по кусочку.",
+   "see": [
+    "for-loop"
+   ]
+  },
+  {
+   "id": "map-filter",
+   "term": "map / filter",
+   "cat": "Python",
+   "aliases": [
+    "map",
+    "filter"
+   ],
+   "what": "map применяет функцию к каждому элементу. filter оставляет только элементы, прошедшие проверку.",
+   "analogy": "Твоя мнемоника: map = красильщик (покрасил каждую деталь), filter = браковщик (выкинул брак, остальное не трогал).",
+   "example": "```\nnums = [1, 2, 3, 4]\nlist(map(lambda x: x * 10, nums))     # [10,20,30,40]\nlist(filter(lambda x: x % 2 == 0, nums))  # [2,4]\n```",
+   "why": "В pandas те же идеи: map → .apply(), filter → булев фильтр df[условие].",
+   "see": [
+    "lambda",
+    "reduce",
+    "boolean-filter"
+   ]
+  },
+  {
+   "id": "reduce",
+   "term": "reduce",
+   "cat": "Python",
+   "aliases": [
+    "reduce"
+   ],
+   "what": "Сворачивает коллекцию в ОДНО значение, попарно применяя функцию: к результату и следующему элементу.",
+   "analogy": "Твоя мнемоника: 'Ридикулус!' — заклинание превращает много в одно. [1,2,3,4] → 10.",
+   "example": "```\nfrom functools import reduce\nreduce(lambda a, b: a + b, [1, 2, 3, 4])\n# (((1+2)+3)+4) = 10\n```",
+   "why": "Агрегации pandas (sum, mean) — это reduce под капотом: колонка → одно число.",
+   "see": [
+    "map-filter",
+    "agg"
+   ]
+  },
+  {
+   "id": "counter",
+   "term": "collections.Counter",
+   "cat": "Python",
+   "aliases": [
+    "counter",
+    "collections"
+   ],
+   "what": "Словарь-счётчик: считает, сколько раз встретился каждый элемент.",
+   "analogy": "Тally-лист вахтёра: каждому входящему — палочка напротив фамилии.",
+   "example": "```\nfrom collections import Counter\nCounter(['BMW', 'Ford', 'BMW'])\n# Counter({'BMW': 2, 'Ford': 1})\n.most_common(1)  # [('BMW', 2)] — топ\n```",
+   "why": "В pandas то же делает value_counts() — Counter для колонки.",
+   "see": [
+    "dict",
+    "value-counts"
+   ]
+  },
+  {
+   "id": "sys-argv",
+   "term": "sys.argv",
+   "cat": "Python",
+   "aliases": [
+    "sys",
+    "argv"
+   ],
+   "what": "Список аргументов командной строки. argv[0] — имя скрипта, дальше — что передал пользователь. Всё приходит СТРОКАМИ.",
+   "analogy": "Записка курьеру: имя курьера (скрипт) + список поручений (аргументы). Поручения всегда написаны словами — числа надо самому int().",
+   "example": "```\n# запуск: python3 script.py data.csv 100\nimport sys\nsys.argv        # ['script.py', 'data.csv', '100']\nlimit = int(sys.argv[2])  # строку → в число!\n```",
+   "why": "DS-скрипты получают путь к данным и параметры через argv — так их можно гонять без правки кода.",
+   "see": []
+  },
+  {
+   "id": "isinstance",
+   "term": "isinstance",
+   "cat": "Python",
+   "aliases": [
+    "isinstance"
+   ],
+   "what": "Проверяет, принадлежит ли объект типу (или классу): isinstance(x, int) → True/False.",
+   "analogy": "Фейс-контроль: 'вы по списку int? проходите'.",
+   "example": "```\nisinstance(3, int)        # True\nisinstance('3', int)      # False — это str!\nisinstance(df, pd.DataFrame)  # проверка типа данных\n```",
+   "why": "Внешние данные (JSON, API) непредсказуемы — isinstance защищает парсер от сюрпризов.",
+   "see": [
+    "sys-argv"
+   ]
+  },
+  {
+   "id": "closure",
+   "term": "closure (замыкание)",
+   "cat": "Python",
+   "aliases": [
+    "closure"
+   ],
+   "what": "Функция, которая 'запомнила' переменные из места, где её создали, и носит их с собой.",
+   "analogy": "Рюкзак: функция ушла из дома (внешней функции), но взяла рюкзак с вещами (переменными) оттуда.",
+   "example": "```\ndef make_multiplier(n):\n    def mul(x):\n        return x * n   # n — из рюкзака\n    return mul\n\ndouble = make_multiplier(2)\ndouble(5)   # 10 — помнит n=2\n```",
+   "why": "Замыкания — механизм декораторов (@classmethod, @pytest.fixture), которые ты используешь каждый день.",
+   "see": [
+    "generator"
+   ]
+  },
+  {
+   "id": "namespace",
+   "term": "namespace (пространство имён)",
+   "cat": "Python",
+   "aliases": [
+    "namespace"
+   ],
+   "what": "Область, где живут имена переменных. У каждой функции, модуля, класса — своё. Одинаковые имена в разных namespace не конфликтуют.",
+   "analogy": "Два города, в каждом своя улица Ленина: адрес работает, потому что сначала называешь город (модуль), потом улицу (имя).",
+   "example": "```\nimport math, numpy\nmath.pi    # pi из namespace math\nnumpy.pi   # другой pi — из numpy\nx = 5      # глобальный x\ndef f():\n    x = 10  # ЛОКАЛЬНЫЙ x, внешний цел\n```",
+   "why": "Поэтому pd.merge и просто merge — разные вещи: префикс говорит, из какого namespace имя.",
+   "see": [
+    "import"
+   ]
+  },
+  {
+   "id": "assignment-symmetry",
+   "term": "Симметрия присваивания",
+   "cat": "Python",
+   "aliases": [
+    "assignment"
+   ],
+   "what": "Принцип: тип левой части должен соответствовать правой. Результат операции над колонкой — пиши в колонку, над таблицей — в таблицу.",
+   "analogy": "Твоя мнемоника: 'берёшь маленькое — пиши в маленькое, берёшь большое — пиши в большое'.",
+   "example": "```\ndf['Fines'] = df['Fines'] * 2  # колонка → в колонку ✓\ndf = df.dropna()               # таблица → в таблицу ✓\n\ndf = df['Refund'].fillna(0)    # ✗ КОЛОНКА затёрла ТАБЛИЦУ\n# правильно:\ndf['Refund'] = df['Refund'].fillna(0)\n```",
+   "why": "Твоя ошибка №1 в DSB7 (3 раза): auto = auto.isna().sum() уничтожала DataFrame.",
+   "see": [
+    "dataframe",
+    "series"
+   ]
+  },
+  {
+   "id": "and-or",
+   "term": "and / or",
+   "cat": "Python",
+   "aliases": [
+    "and",
+    "or",
+    "logic"
+   ],
+   "what": "Логические операторы: and — истина, только если ВСЕ условия истинны; or — если хотя бы одно.",
+   "analogy": "Твоя мнемоника: and = три замка на двери. Все открыты → войдёшь. Один заперт → нет. or = три двери в дом: хватит одной открытой.",
+   "example": "```\nage > 18 and has_ticket   # оба условия\nday == 'sat' or day == 'sun'  # хотя бы одно\n# в pandas вместо and/or — & и | со скобками!\n(df['Fines'] > 2000) & (df['Year'] > 2010)\n```",
+   "why": "Фильтры данных — это всегда комбинации условий через and/or (в pandas: & / |).",
+   "see": [
+    "boolean-filter"
+   ]
+  },
+  {
+   "id": "pytest",
+   "term": "pytest",
+   "cat": "Python",
+   "aliases": [
+    "pytest",
+    "testing",
+    "test"
+   ],
+   "what": "Фреймворк тестирования: сам находит файлы test_*.py и функции test_*, запускает их и сверяет assert.",
+   "analogy": "Контролёр ОТК с чек-листом: прогоняет каждое изделие (функцию) по списку проверок. Конвенция: 1 тест = 1 аспект — одна строка чек-листа проверяет одно свойство.",
+   "example": "```\n# test_calc.py\ndef test_double():\n    assert double(2) == 4   # упадёт — тест красный\n\n# запуск: pytest -v\n```",
+   "why": "Тесты — страховка: поменял код → прогнал pytest → уверен, что ничего не сломал.",
+   "see": [
+    "isinstance"
+   ]
+  },
+  {
+   "id": "os-path",
+   "term": "os.path / пути",
+   "cat": "Python",
+   "aliases": [
+    "os",
+    "paths",
+    "path"
+   ],
+   "what": "Модуль для работы с путями файлов: склейка, проверка существования, абсолютный путь. Пути собирают через join, а не вручную строками.",
+   "analogy": "Конструктор адреса: город + улица + дом (join) вместо склейки строк со слешами — модуль сам ставит правильный разделитель для любой ОС.",
+   "example": "```\nimport os\nDATA_DIR = os.path.join(os.path.dirname(__file__),\n                        'data')\nos.path.exists(path)   # файл есть?\n```",
+   "why": "Захардкоженный путь '/home/timos/...' сломается у peer-ревьюера — os.path делает код переносимым.",
+   "see": [
+    "import"
+   ]
+  },
+  {
+   "id": "bs4",
+   "term": "BeautifulSoup",
+   "cat": "Python",
+   "aliases": [
+    "html",
+    "beautifulsoup",
+    "bs4",
+    "parsing"
+   ],
+   "what": "Библиотека парсинга HTML: превращает текст страницы в дерево, по которому можно искать теги и доставать данные.",
+   "analogy": "Археолог с ситом: страница — куча грунта, soup.find_all('a') — просеять и достать только нужные черепки (теги).",
+   "example": "```\nfrom bs4 import BeautifulSoup\nsoup = BeautifulSoup(html, 'html.parser')\nsoup.find_all('td')      # все ячейки таблиц\nsoup.find('h1').text     # текст заголовка\n```",
+   "why": "Когда данных нет в CSV/API — их добывают парсингом страниц (web scraping).",
+   "see": [
+    "read-json"
+   ]
+  },
+  {
+   "id": "class-object",
+   "term": "class и объект",
+   "cat": "OOP",
+   "aliases": [
+    "class",
+    "object",
+    "method"
+   ],
+   "what": "Класс — шаблон (описание полей и методов). Объект (экземпляр) — конкретная вещь, созданная по шаблону.",
+   "analogy": "Твоя мнемоника: класс = печатный станок, объект = напечатанный продукт. Станок один — продуктов много.",
+   "example": "```\nclass Car:                # станок\n    def __init__(self, num):\n        self.num = num\n\na = Car('E432XX')  # продукт 1\nb = Car('X123YY')  # продукт 2 — независимый\n```",
+   "why": "Всё в Python — объекты: DataFrame, Series — экземпляры классов pandas, и ты зовёшь их методы.",
+   "see": [
+    "init",
+    "self"
+   ]
+  },
+  {
+   "id": "init",
+   "term": "__init__",
+   "cat": "OOP",
+   "aliases": [
+    "init"
+   ],
+   "what": "Конструктор: метод, который запускается автоматически при создании объекта и заполняет его поля.",
+   "analogy": "Анкета при заселении в отель: пока не заполнил (имя, паспорт) — номер не выдают. Каждый гость заполняет свою.",
+   "example": "```\nclass Car:\n    def __init__(self, num, fines):\n        self.num = num      # поля ЭТОГО объекта\n        self.fines = fines\n\nc = Car('E432XX', 3200)  # __init__ вызвался сам\nc.fines   # 3200\n```",
+   "why": "pd.DataFrame(data) — это тоже вызов __init__ класса DataFrame.",
+   "see": [
+    "class-object",
+    "self",
+    "dunder"
+   ]
+  },
+  {
+   "id": "self",
+   "term": "self",
+   "cat": "OOP",
+   "aliases": [
+    "self"
+   ],
+   "what": "Первый параметр методов: ссылка на ТОТ объект, у которого вызвали метод. Python подставляет его сам.",
+   "analogy": "Бейджик 'это я': когда у объекта a зовут метод, внутри метода self — это сам a. У объекта b — это b.",
+   "example": "```\nclass Car:\n    def __init__(self, num):\n        self.num = num\n    def show(self):\n        print(self.num)  # поле ИМЕННО этого объекта\n\na = Car('E432XX')\na.show()  # python сам сделал show(a)\n```",
+   "why": "self.x — данные живут в объекте, а не в глобальных переменных: можно держать 100 машин без путаницы.",
+   "see": [
+    "cls-vs-self",
+    "init"
+   ]
+  },
+  {
+   "id": "cls-vs-self",
+   "term": "cls vs self",
+   "cat": "OOP",
+   "aliases": [
+    "cls"
+   ],
+   "what": "Оба — автоматический первый параметр, но self указывает на экземпляр (конкретный объект), а cls — на сам класс.",
+   "analogy": "Печатный станок и открытка: self = 'эта открытка', cls = 'сам станок'. Станок умеет напечатать новую открытку: cls(...).",
+   "example": "```\nclass Movies:\n    def info(self):          # self → экземпляр\n        print(self.path)\n\n    @classmethod\n    def default(cls):        # cls → сам класс\n        return cls('def.csv')  # = Movies('def.csv')\n```",
+   "why": "cls(...) внутри classmethod создаёт новый объект класса — на этом строится factory pattern.",
+   "see": [
+    "classmethod",
+    "factory-pattern",
+    "self"
+   ]
+  },
+  {
+   "id": "classmethod",
+   "term": "@classmethod",
+   "cat": "OOP",
+   "aliases": [
+    "classmethod"
+   ],
+   "what": "Декоратор: метод принадлежит классу, а не объекту. Вызывается без создания экземпляра, первым параметром получает cls.",
+   "analogy": "Кнопка на самом станке (не на открытке): жмёшь — станок выполняет, открытка для этого не нужна.",
+   "example": "```\nclass Movies:\n    @classmethod\n    def default(cls):\n        return cls('movies.csv')\n\nm = Movies.default()  # вызов ОТ КЛАССА, без объекта\n```",
+   "why": "pd.DataFrame.from_dict(...) — classmethod-фабрика, которой ты уже пользовался.",
+   "see": [
+    "cls-vs-self",
+    "factory-pattern",
+    "staticmethod"
+   ]
+  },
+  {
+   "id": "staticmethod",
+   "term": "@staticmethod",
+   "cat": "OOP",
+   "aliases": [
+    "staticmethod"
+   ],
+   "what": "Метод внутри класса, которому не нужен ни объект (self), ни класс (cls) — просто функция, положенная в класс для порядка.",
+   "analogy": "Калькулятор на стойке отеля: лежит в отеле, но работает сам по себе — ни гость, ни отель ему не нужны.",
+   "example": "```\nclass Stats:\n    @staticmethod\n    def to_rub(usd):\n        return usd * 90   # ни self, ни cls\n\nStats.to_rub(100)  # 9000\n```",
+   "why": "Утилиты-помощники держат рядом с классом, чтобы не засорять модуль свободными функциями.",
+   "see": [
+    "classmethod"
+   ]
+  },
+  {
+   "id": "factory-pattern",
+   "term": "Factory pattern (фабрика)",
+   "cat": "OOP",
+   "aliases": [
+    "factory",
+    "pattern"
+   ],
+   "what": "Паттерн: classmethod, который создаёт и возвращает готовый объект с типовыми настройками. Вместо вызова конструктора с кучей параметров — один понятный метод.",
+   "analogy": "Пиццерия: ты не приносишь тесто и сыр (параметры __init__) — говоришь 'Маргариту' (имя фабрики) и получаешь готовую пиццу со стандартной начинкой.",
+   "example": "```\nclass Movies:\n    def __init__(self, path, limit):\n        self.path, self.limit = path, limit\n\n    @classmethod\n    def default(cls):           # ФАБРИКА\n        return cls('movies.csv', limit=1000)\n\nm1 = Movies('movies.csv', 1000)  # помни параметры сам\nm2 = Movies.default()            # фабрика помнит за тебя\n```",
+   "why": "Скрыть сложность + дать дефолты: pd.read_csv() — по сути фабрика, собирающая DataFrame за тебя.",
+   "see": [
+    "classmethod",
+    "cls-vs-self",
+    "init"
+   ]
+  },
+  {
+   "id": "dunder",
+   "term": "dunder-методы (__магические__)",
+   "cat": "OOP",
+   "aliases": [
+    "dunder",
+    "magic"
+   ],
+   "what": "Методы с двойными подчёркиваниями (__init__, __len__, __str__): Python вызывает их САМ в ответ на встроенные операции.",
+   "analogy": "Кнопки лифта: ты жмёшь '5' (пишешь len(obj)) — лифт сам знает, какой механизм дёрнуть (__len__).",
+   "example": "```\nclass Deck:\n    def __len__(self):\n        return 116\n\nd = Deck()\nlen(d)   # 116 — python сам вызвал d.__len__()\n# print(obj) → __str__, obj[0] → __getitem__\n```",
+   "why": "len(df), df['col'], print(df) работают, потому что pandas реализовал dunder-методы DataFrame.",
+   "see": [
+    "init",
+    "class-object"
+   ]
+  },
+  {
+   "id": "dataframe",
+   "term": "DataFrame",
+   "cat": "Pandas",
+   "aliases": [
+    "dataframe",
+    "pandas"
+   ],
+   "what": "Двумерная таблица pandas: строки + колонки + индекс. Главная структура данных в DS.",
+   "analogy": "Твоя мнемоника: Excel в памяти Python — только мощнее, программируемее, миллионы строк.",
+   "example": "```\ndf = pd.read_csv('fines.csv')\ndf.shape     # (930, 6) — строк, колонок\ndf.head()    # первые 5 строк\ndf['Fines']  # одна колонка → это Series\n```",
+   "why": "90% работы DS — операции над DataFrame: фильтры, группировки, склейки.",
+   "see": [
+    "series",
+    "index",
+    "read-csv"
+   ]
+  },
+  {
+   "id": "series",
+   "term": "Series",
+   "cat": "Pandas",
+   "aliases": [
+    "series"
+   ],
+   "what": "Одномерный столбец с индексом. Каждая колонка DataFrame — это Series.",
+   "analogy": "DataFrame — шкаф, Series — один ящик из него: содержимое + наклейки-индексы.",
+   "example": "```\ns = df['Fines']    # колонка → Series\ns.mean()           # у Series свои методы\ndf[['Fines']]      # двойные скобки → DataFrame!\n```",
+   "why": "Помни симметрию: результат-Series пиши в колонку, не затирай им весь DataFrame.",
+   "see": [
+    "dataframe",
+    "assignment-symmetry"
+   ]
+  },
+  {
+   "id": "index",
+   "term": "index (индекс)",
+   "cat": "Pandas",
+   "aliases": [
+    "index"
+   ],
+   "what": "Метки строк DataFrame. По умолчанию 0,1,2..., но можно сделать индексом колонку (даты, номера машин).",
+   "analogy": "Номера квартир в подъезде: содержимое квартир (данные) отдельно, табличка на двери (индекс) отдельно.",
+   "example": "```\ndf = pd.read_csv('f.csv', index_col='CarNumber')\ndf.loc['E432XX']        # доступ по метке\ndf.reset_index()        # индекс → обратно в колонку\ndf.reset_index(drop=True)  # сбросить и выбросить\n```",
+   "why": "После concat индексы дублируются — reset_index(drop=True) лечит это (твой ex04).",
+   "see": [
+    "dataframe",
+    "concat"
+   ]
+  },
+  {
+   "id": "axis",
+   "term": "axis 0/1",
+   "cat": "Pandas",
+   "aliases": [
+    "axis"
+   ],
+   "what": "Направление операции: axis=0 — вдоль строк (вертикально), axis=1 — вдоль колонок (горизонтально).",
+   "analogy": "Твоя мнемоника: дробь. axis=0 → числитель (сверху-вниз) — СТРОКИ. axis=1 → знаменатель (влево-вправо) — КОЛОНКИ.",
+   "example": "```\ndf.sum(axis=0)        # сумма каждой КОЛОНКИ (идём по строкам)\ndf.dropna(axis=1)     # удалить КОЛОНКИ с пропусками\npd.concat([a, b], axis=0)  # склейка стопкой (строки)\npd.concat([a, b], axis=1)  # склейка боком (колонки)\n```",
+   "why": "Твой баг в ex02: dropna(axis=0) удалил все строки вместо одной колонки.",
+   "see": [
+    "concat",
+    "isna-dropna"
+   ]
+  },
+  {
+   "id": "read-csv",
+   "term": "pd.read_csv",
+   "cat": "Pandas",
+   "aliases": [
+    "read_csv",
+    "csv"
+   ],
+   "what": "Читает CSV-файл в DataFrame. Десятки параметров управляют разбором: разделитель, заголовок, имена, пропуск строк.",
+   "analogy": "Таможенник на границе файла: что считать разделителем (sep), где заголовок (header), кого не пускать (skiprows).",
+   "example": "```\npd.read_csv('data.csv',\n    sep=',',          # разделитель\n    header=0,         # строка с именами колонок\n    names=['A','B'],  # или свои имена\n    skiprows=[2,3],   # пропустить строки\n    index_col=0)      # колонку 0 → в индекс\n```",
+   "why": "Реальные CSV всегда кривые: не тот sep, мусорные шапки — параметры read_csv это лечат.",
+   "see": [
+    "dataframe",
+    "to-csv-json",
+    "index"
+   ]
+  },
+  {
+   "id": "read-json",
+   "term": "чтение JSON",
+   "cat": "Pandas",
+   "aliases": [
+    "json",
+    "read_json"
+   ],
+   "what": "JSON читают либо pd.read_json (если структура простая), либо json.load → потом собирают DataFrame вручную.",
+   "analogy": "Посылка с инструкцией: сначала вскрой и посмотри ВСЮ структуру (json.load), потом решай, как раскладывать по таблице.",
+   "example": "```\nimport json\nwith open('surname.json') as f:   # 'r' по умолчанию!\n    data = json.load(f)\n\ndf = pd.DataFrame(data[1:], columns=data[0])\n```",
+   "why": "Твой урок ex04: open(..., 'w') СТЁР файл — режим 'w' только для записи. Чтение — без режима.",
+   "see": [
+    "dict",
+    "dataframe"
+   ]
+  },
+  {
+   "id": "to-csv-json",
+   "term": "to_csv / to_json",
+   "cat": "Pandas",
+   "aliases": [
+    "to_csv",
+    "to_json"
+   ],
+   "what": "Сохраняют DataFrame в файл. index=False — не писать индекс отдельной колонкой.",
+   "analogy": "Печать документа из Excel: таблица из памяти → файл на диске.",
+   "example": "```\ndf.to_csv('fines.csv', index=False)\ndf.to_json('fines.json')\n# index=False — иначе появится лишняя\n# колонка 'Unnamed: 0' при чтении\n```",
+   "why": "Результат пайплайна сохраняют на диск — следующий этап (или коллега) начнёт с файла.",
+   "see": [
+    "read-csv"
+   ]
+  },
+  {
+   "id": "dtype-category",
+   "term": "dtype / astype / category",
+   "cat": "Pandas",
+   "aliases": [
+    "dtype",
+    "category",
+    "astype"
+   ],
+   "what": "dtype — тип данных колонки (int64, float64, object, datetime64). astype меняет тип. category — экономный тип для повторяющихся значений.",
+   "analogy": "Этикетки на банках: 'числа', 'текст', 'даты'. category = вместо 1000 одинаковых наклеек 'BMW' — одна наклейка и 1000 ссылок на неё.",
+   "example": "```\ndf.dtypes                      # типы всех колонок\ndf['Year'] = df['Year'].astype('int32')\ndf['Make'] = df['Make'].astype('category')\n# object → category: память падает в разы\n```",
+   "why": "Downcasting (int64→int8, object→category) — главный приём ex05: датасет влезает в память.",
+   "see": [
+    "dataframe",
+    "dt-accessor"
+   ]
+  },
+  {
+   "id": "value-counts",
+   "term": "value_counts",
+   "cat": "Pandas",
+   "aliases": [
+    "value_counts",
+    "count"
+   ],
+   "what": "Считает, сколько раз каждое значение встречается в колонке. Сортирует по убыванию.",
+   "analogy": "Подсчёт голосов на выборах: каждому кандидату — столбик галочек, победитель сверху.",
+   "example": "```\ndf['Make'].value_counts()\n# Ford      412\n# BMW       310\n# Audi      208\ndf['Make'].value_counts(normalize=True)  # в долях\n```",
+   "why": "Первый вопрос к любой категориальной колонке: 'что тут и в каких пропорциях?'",
+   "see": [
+    "counter",
+    "groupby"
+   ]
+  },
+  {
+   "id": "drop-duplicates",
+   "term": "drop_duplicates",
+   "cat": "Pandas",
+   "aliases": [
+    "drop_duplicates",
+    "duplicates"
+   ],
+   "what": "Удаляет повторяющиеся строки. subset — по каким колонкам сравнивать, keep — какую копию оставить ('first'/'last').",
+   "analogy": "Вышибала со списком: 'этот номер уже заходил — не пускаю'. keep='last' — пускает последнего, выгоняет первого.",
+   "example": "```\ndf.drop_duplicates(subset='CarNumber', keep='last')\n# НЕ ЗАБУДЬ присвоить:\ndf = df.drop_duplicates(...)\n```",
+   "why": "Твой баг ex02: без 'df =' числа не сошлись — метод вернул копию, а оригинал остался с дублями.",
+   "see": [
+    "assignment-symmetry"
+   ]
+  },
+  {
+   "id": "isna-dropna",
+   "term": "isna / dropna",
+   "cat": "Pandas",
+   "aliases": [
+    "nan",
+    "isna",
+    "dropna"
+   ],
+   "what": "isna() — карта пропусков (True где NaN). dropna() — удаляет строки (axis=0) или колонки (axis=1) с пропусками. thresh — порог ВАЛИДНЫХ значений.",
+   "analogy": "Инвентаризация склада: isna — список пустых полок, dropna — выбросить стеллажи, где пусто. thresh=500 — оставить стеллажи, где есть хотя бы 500 товаров.",
+   "example": "```\ndf.isna().sum()        # пропусков в каждой колонке\ndf = df.dropna(axis=1, thresh=500)\n# thresh смотрит на ЗАПОЛНЕННЫЕ, не на пропуски!\n```",
+   "why": "Реальные данные всегда дырявые. Сначала карта пропусков, потом решение: удалять или заполнять.",
+   "see": [
+    "fillna",
+    "axis"
+   ]
+  },
+  {
+   "id": "fillna",
+   "term": "fillna / ffill",
+   "cat": "Pandas",
+   "aliases": [
+    "fillna",
+    "ffill"
+   ],
+   "what": "Заполняет пропуски: константой, средним, или соседним значением (ffill — протянуть предыдущее вниз).",
+   "analogy": "Журнал посещаемости: пустая клетка → ставим среднее по классу (fillna(mean)) или копируем вчерашнее (ffill).",
+   "example": "```\ndf['Refund'] = df['Refund'].fillna(df['Refund'].mean())\ndf['Refund'] = df['Refund'].ffill()  # протянуть сверху\n# fillna(method='ffill') — устарело в pandas 2.x\n```",
+   "why": "Удалять строки — терять данные. Заполнение сохраняет размер выборки для модели.",
+   "see": [
+    "isna-dropna",
+    "assignment-symmetry"
+   ]
+  },
+  {
+   "id": "boolean-filter",
+   "term": "Булев фильтр df[условие]",
+   "cat": "Pandas",
+   "aliases": [
+    "filter",
+    "boolean"
+   ],
+   "what": "Отбор строк по условию: внутри скобок — Series из True/False, остаются строки с True.",
+   "analogy": "Сито: условие — размер ячеек, проходит только то, что подходит. Несколько условий — & (и), | (или), каждое в скобках.",
+   "example": "```\ndf[df['Fines'] > 2000]\ndf[(df['Make'] == 'Ford') & (df['Year'] > 2010)]\n# скобки вокруг каждого условия ОБЯЗАТЕЛЬНЫ\n```",
+   "why": "Это filter из Python, но векторный: миллион строк фильтруется мгновенно.",
+   "see": [
+    "map-filter",
+    "series"
+   ]
+  },
+  {
+   "id": "apply",
+   "term": "apply",
+   "cat": "Pandas",
+   "aliases": [
+    "apply"
+   ],
+   "what": "Применяет функцию к каждому элементу колонки (или каждой строке таблицы). Часто с lambda.",
+   "analogy": "Красильщик map, нанятый в pandas: прошёл по колонке, обработал каждое значение.",
+   "example": "```\ndf['Fines'].apply(lambda x: x / 100)\n# но если есть встроенная векторная операция —\n# она быстрее:\ndf['Fines'] / 100   # лучше чем apply\n```",
+   "why": "apply — швейцарский нож, но медленный: в ex05 сравниваем iterrows vs apply vs векторы.",
+   "see": [
+    "lambda",
+    "map-filter"
+   ]
+  },
+  {
+   "id": "str-accessor",
+   "term": ".str (строковые методы)",
+   "cat": "Pandas",
+   "aliases": [
+    "str",
+    "split",
+    "strings"
+   ],
+   "what": "Доступ к строковым операциям для всей колонки сразу: .str.upper(), .str.split(), .str.contains().",
+   "analogy": "Мегафон: командуешь один раз — выполняет вся колонна строк, а не одна.",
+   "example": "```\ndf['Make'] = df['MakeModel'].str.split(' ', n=1,\n                                expand=True)[0]\n# expand=True → DataFrame из частей;\n# у кого нет второй части — None, не ошибка\n```",
+   "why": "Твой ex03: 9 машин без модели уронили split — expand=True решил это мягко.",
+   "see": [
+    "apply"
+   ]
+  },
+  {
+   "id": "dt-accessor",
+   "term": ".dt и datetime64",
+   "cat": "Pandas",
+   "aliases": [
+    "datetime",
+    "accessor",
+    "dt"
+   ],
+   "what": "datetime64 — тип 'дата-время'. Через .dt достаёшь части: .dt.year, .dt.hour, .dt.dayofweek.",
+   "analogy": "Швейцарские часы вместо бумажки: пока дата — строка ('2026-06-11'), это просто текст. astype/to_datetime превращает её в механизм, у которого можно спросить час и день недели.",
+   "example": "```\ndf['dt'] = pd.to_datetime(df['datetime'])\ndf['dt'].dt.hour       # час каждой строки\ndf['dt'].dt.dayofweek  # 0=понедельник\n```",
+   "why": "Логи и временные ряды — половина DS-задач: без .dt не построишь 'активность по часам'.",
+   "see": [
+    "dtype-category"
+   ]
+  },
+  {
+   "id": "cut",
+   "term": "pd.cut",
+   "cat": "Pandas",
+   "aliases": [
+    "cut",
+    "bins"
+   ],
+   "what": "Режет числовую колонку на интервалы-категории: возраст → группы, час → время суток.",
+   "analogy": "Сортировка яблок по размеру: задал границы корзин (bins) и подписи (labels) — каждое яблоко само падает в свою корзину.",
+   "example": "```\ndf['daytime'] = pd.cut(df['hour'],\n    bins=[0, 6, 12, 18, 24],\n    labels=['night','morning','day','evening'])\n```",
+   "why": "Модели и отчёты часто хотят категории, а не сырые числа — cut делает это одной строкой.",
+   "see": [
+    "dtype-category",
+    "value-counts"
+   ]
+  },
+  {
+   "id": "groupby",
+   "term": "groupby",
+   "cat": "Pandas",
+   "aliases": [
+    "groupby"
+   ],
+   "what": "Split-Apply-Combine: разбить строки на группы по значению колонки → применить агрегацию к каждой → собрать результат.",
+   "analogy": "Твоя мнемоника: песочные часы. Широко (все данные) → узко (группы по отдельности) → широко (итоговая таблица).",
+   "example": "```\ndf.groupby('Make')['Fines'].mean()\n# split:   все строки → кучки по Make\n# apply:   в каждой кучке среднее Fines\n# combine: Make → среднее, одной таблицей\n```",
+   "why": "Главный инструмент аналитика: 'средний чек ПО городам', 'штрафы ПО маркам' — всё groupby.",
+   "see": [
+    "agg",
+    "pivot-table",
+    "value-counts"
+   ]
+  },
+  {
+   "id": "agg",
+   "term": "agg и агрегации",
+   "cat": "Pandas",
+   "aliases": [
+    "agg",
+    "aggregation",
+    "sum",
+    "mean",
+    "median",
+    "std",
+    "nunique"
+   ],
+   "what": "Агрегация — свёртка многих значений в одно: sum, mean, median, min, max, std, count, nunique, first, last. agg() применяет несколько сразу.",
+   "analogy": "Отчёт директору: тысяча строк продаж → одна строка 'итого, среднее, максимум'. Ридикулус для таблиц.",
+   "example": "```\ndf.groupby('Make')['Fines'].agg(['mean', 'max', 'count'])\n#        mean      max  count\n# BMW    4200.0  18000     310\n# nunique — сколько РАЗНЫХ значений\n```",
+   "why": "std (разброс) и median (устойчивое среднее) — без них mean врёт на выбросах.",
+   "see": [
+    "groupby",
+    "reduce"
+   ]
+  },
+  {
+   "id": "pivot-table",
+   "term": "pivot_table",
+   "cat": "Pandas",
+   "aliases": [
+    "pivot_table",
+    "pivot"
+   ],
+   "what": "Сводная таблица: строки — одна категория, колонки — другая, в ячейках — агрегат значений.",
+   "analogy": "Шахматка отеля: этажи (index) × дни (columns), в клетках — занятость (values). Та же groupby, но развёрнутая в двумерку.",
+   "example": "```\ndf.pivot_table(index=['Make','Model'],\n               columns='Year',\n               values='Fines',\n               aggfunc='sum')\n# Make/Model в строках, годы в колонках\n```",
+   "why": "Сводные — язык бизнеса: то, что в Excel делают мышкой, тут — одна команда.",
+   "see": [
+    "groupby",
+    "agg"
+   ]
+  },
+  {
+   "id": "concat",
+   "term": "pd.concat",
+   "cat": "Pandas",
+   "aliases": [
+    "concat"
+   ],
+   "what": "Склейка таблиц: axis=0 — стопкой (строки под строками), axis=1 — боком (колонки рядом). Клеит ПО ИНДЕКСУ.",
+   "analogy": "Поезд: axis=0 — прицепить вагоны в хвост (длиннее), axis=1 — приварить вагоны сбоку (шире). Сцепка — индекс: кривые индексы → вагоны мимо друг друга.",
+   "example": "```\npd.concat([fines, sample])          # вниз: больше строк\npd.concat([df.reset_index(drop=True),\n           years], axis=1)          # вбок: новая колонка\n```",
+   "why": "Данные приходят кусками (по месяцам, по регионам) — concat собирает их в один датасет.",
+   "see": [
+    "axis",
+    "index",
+    "merge"
+   ]
+  },
+  {
+   "id": "merge",
+   "term": "pd.merge",
+   "cat": "Pandas",
+   "aliases": [
+    "merge",
+    "join"
+   ],
+   "what": "SQL-join для таблиц: соединяет строки двух таблиц по общей колонке (on). how: inner — только совпавшие, outer — все, left/right — все из одной стороны.",
+   "analogy": "Свидание двух списков: inner — пришли только пары (439), outer — пришли все, даже без пары (933), left — все левые + их пары (930).",
+   "example": "```\npd.merge(fines, owners, on='CarNumber', how='inner')\n# inner: пересечение     outer: объединение\n# left:  всё из fines    right: всё из owners\n# незаполненные ячейки → NaN\n```",
+   "why": "Данные живут в разных таблицах (штрафы отдельно, владельцы отдельно) — merge их женит. Основа SQL в DSB8.",
+   "see": [
+    "concat",
+    "isna-dropna"
+   ]
+  },
+  {
+   "id": "sample",
+   "term": "sample",
+   "cat": "Pandas",
+   "aliases": [
+    "sample"
+   ],
+   "what": "Случайная выборка строк: n — сколько, random_state — зерно для повторяемости, replace=True — можно брать одну строку повторно.",
+   "analogy": "Лотерейный барабан: вытащил n шариков. random_state=21 — 'заряженный' барабан, всегда выдаёт те же шарики. replace=True — шарик возвращается в барабан.",
+   "example": "```\ndf.sample(n=200, random_state=21)\nclean.sample(n=531, random_state=21, replace=True)\n# replace=True обязателен, если n больше\n# размера выборки (твой ex04)\n```",
+   "why": "random_state — воспроизводимость экспериментов: коллега получит ТУ ЖЕ выборку и те же результаты.",
+   "see": [
+    "random-seed"
+   ]
+  },
+  {
+   "id": "random-seed",
+   "term": "np.random.seed / randint",
+   "cat": "Pandas",
+   "aliases": [
+    "seed",
+    "randint",
+    "numpy"
+   ],
+   "what": "seed(21) фиксирует стартовое состояние генератора случайных чисел: 'случайность' становится повторяемой. randint(a, b) — целое от a до b НЕ включая b.",
+   "analogy": "Колода карт: seed = перетасовать строго определённым способом — у всех, кто так перетасовал, карты лягут одинаково. 21 — не код, просто номер способа тасовки.",
+   "example": "```\nnp.random.seed(21)\nnp.random.randint(1980, 2020, size=930)\n# числа 1980..2019 (2020 НЕ входит!)\n# при том же seed — тот же результат\n```",
+   "why": "Вся DS-наука на random_state: без него эксперимент нельзя повторить и проверить.",
+   "see": [
+    "sample",
+    "range"
+   ]
+  },
+  {
+   "id": "kernel",
+   "term": "kernel (ядро Jupyter)",
+   "cat": "Jupyter и инструменты",
+   "aliases": [
+    "kernel",
+    "jupyter"
+   ],
+   "what": "Python-процесс, который выполняет ячейки ноутбука и держит в памяти все переменные. Один notebook = один kernel.",
+   "analogy": "Повар на кухне: ты передаёшь записки с заказами (ячейки), он готовит и помнит, что уже на плите (переменные). Restart Kernel = повар ушёл, пришёл новый — НИЧЕГО не помнит.",
+   "example": "```\nТы → ячейка → kernel → результат\n\nRestart Kernel:\n  все переменные потеряны,\n  но ТЕКСТ ячеек цел — прогони их заново\n```",
+   "why": "Если ноутбук 'сошёл с ума' (переменные из удалённых ячеек) — Restart & Run All даёт чистую правду.",
+   "see": [
+    "cells"
+   ]
+  },
+  {
+   "id": "cells",
+   "term": "Ячейки Jupyter",
+   "cat": "Jupyter и инструменты",
+   "aliases": [
+    "cells",
+    "notebook"
+   ],
+   "what": "Ноутбук — цепочка ячеек: code (исполняется kernel'ом) и markdown (текст-пояснения). Порядок ЗАПУСКА важнее порядка на экране.",
+   "analogy": "Кулинарная книга с плитой: рецепты (markdown) чередуются с готовкой (code). Если готовить не по порядку — борщ из шага 5 без бульона из шага 2.",
+   "example": "```\n[1] import pandas as pd      ← запущена первой\n[3] df.head()                ← запущена третьей\n[2] df = pd.read_csv(...)    ← второй\n# числа в [скобках] — реальный порядок\n```",
+   "why": "Peer-review School 21 гоняет Restart & Run All: ячейки должны работать СВЕРХУ ВНИЗ.",
+   "see": [
+    "kernel"
+   ]
+  },
+  {
+   "id": "cprofile",
+   "term": "cProfile",
+   "cat": "Jupyter и инструменты",
+   "aliases": [
+    "profiling",
+    "cprofile"
+   ],
+   "what": "Встроенный профайлер: замеряет, сколько раз вызвана каждая функция и сколько времени она съела.",
+   "analogy": "Хронометраж на заводе: к каждому рабочему (функции) приставили человека с секундомером. tottime — личное время рабочего, cumtime — его время вместе с подчинёнными.",
+   "example": "```\npython3 -m cProfile -s tottime script.py\n\n# ncalls  tottime  cumtime  function\n#   1000    0.500    0.500  process()\n# -s tottime — сортировка по прожорливости\n```",
+   "why": "Правило оптимизации: сначала ИЗМЕРЬ (профайлер), потом чини самое жирное. Не гадай.",
+   "see": [
+    "timeit"
+   ]
+  },
+  {
+   "id": "timeit",
+   "term": "timeit / %timeit",
+   "cat": "Jupyter и инструменты",
+   "aliases": [
+    "timeit",
+    "performance"
+   ],
+   "what": "Точный замер скорости маленького куска кода: прогоняет его тысячи раз и усредняет.",
+   "analogy": "Стометровка: один забег не показатель (ветер, старт) — бегут 1000 раз, берут лучшее среднее.",
+   "example": "```\n# в Jupyter:\n%timeit df['Fines'] * 2          # одна строка\n%%timeit                          # вся ячейка\nfor ...\n# вывод: 21.5 µs ± 0.3 µs per loop\n```",
+   "why": "Главный инструмент ex05: каким способом (iterrows/apply/векторы) быстрее — решает замер.",
+   "see": [
+    "cprofile"
+   ]
+  },
+  {
+   "id": "interpreter-c",
+   "term": "Интерпретатор и C-код",
+   "cat": "Jupyter и инструменты",
+   "aliases": [
+    "c",
+    "interpreter"
+   ],
+   "what": "Python — интерпретируемый язык: твой код читается и исполняется на лету. Сам интерпретатор и быстрые библиотеки (numpy, pandas) написаны на C — компилируемом языке в разы быстрее.",
+   "analogy": "Переводчик-синхронист (Python) против заранее переведённой книги (C): синхронист удобен, но медленнее. Pandas-операции — это вызов 'книги': пока ты в векторных операциях — работает быстрый C.",
+   "example": "```\nfor x in col: s += x      # медленно: каждый шаг\n                          # переводит интерпретатор\ncol.sum()                 # быстро: одна команда,\n                          # дальше работает C\n```",
+   "why": "Вот ПОЧЕМУ векторные операции pandas бьют циклы в сотни раз — суть всего ex05.",
+   "see": [
+    "apply",
+    "timeit"
+   ]
+  },
+  {
+   "id": "cli-basics",
+   "term": "Базовые команды терминала",
+   "cat": "CLI",
+   "aliases": [
+    "cli",
+    "bash",
+    "mv",
+    "cp",
+    "ls"
+   ],
+   "what": "Навигация и файлы: cd (перейти), ls (список), mv (переместить/переименовать), cp (копировать), rm (удалить), mkdir (создать папку).",
+   "analogy": "Завхоз со связкой ключей: те же действия, что мышкой в проводнике, но словами — и поэтому их можно записать в скрипт и повторять.",
+   "example": "```\ncd project/data    # перейти\nls -l              # список с правами\nmv old.csv new.csv # переименовать = переместить\ncp a.csv backup/   # копировать\n```",
+   "why": "Серверы без графики: DS-инженер работает с данными на удалённых машинах только через терминал.",
+   "see": [
+    "chmod",
+    "shebang"
+   ]
+  },
+  {
+   "id": "chmod",
+   "term": "chmod",
+   "cat": "CLI",
+   "aliases": [
+    "chmod"
+   ],
+   "what": "Меняет права файла: кто может читать (r), писать (w), исполнять (x). chmod +x делает файл запускаемым.",
+   "analogy": "Пропуск в здание: r — можно смотреть, w — можно переставлять мебель, x — можно входить. +x = выдать пропуск 'на вход'.",
+   "example": "```\nchmod +x script.sh    # сделать исполняемым\n./script.sh           # теперь запускается\nls -l                 # посмотреть права: -rwxr--r--\n```",
+   "why": "Свои .sh скрипты (а они у тебя уже есть) без +x не запустятся.",
+   "see": [
+    "shebang"
+   ]
+  },
+  {
+   "id": "shebang",
+   "term": "shebang (#!)",
+   "cat": "CLI",
+   "aliases": [
+    "shebang"
+   ],
+   "what": "Первая строка скрипта: #!/usr/bin/env python3 — говорит системе, КАКОЙ программой исполнять файл при запуске ./script.",
+   "analogy": "Этикетка 'открывать таким-то ключом' на двери: система читает её и зовёт нужный интерпретатор.",
+   "example": "```\n#!/usr/bin/env python3\nprint('hello')\n\n# chmod +x hello.py\n# ./hello.py  ← работает без слова python3\n```",
+   "why": "Скрипт со встроенным shebang + chmod превращается в полноценную команду.",
+   "see": [
+    "chmod"
+   ]
+  }
+ ]
+}

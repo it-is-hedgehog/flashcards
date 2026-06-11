@@ -506,3 +506,110 @@ input[type="number"] {
   .card { min-height: 400px; }
   .rate-btn { padding: 14px 6px; }
 }
+
+/* ============================================================
+   ГЛОССАРИЙ
+   ============================================================ */
+.btn-glossary {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#gloss-search {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.gloss-cat {
+  margin: 18px 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.gloss-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.gloss-item:active { opacity: 0.7; }
+
+.gloss-term {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.gloss-what {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.gloss-entry-card { padding: 18px; }
+
+.gloss-entry-term {
+  margin: 0 0 2px;
+  font-size: 1.3rem;
+}
+
+.gloss-entry-cat {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.gloss-block { margin-bottom: 14px; }
+
+.gloss-block .card-text {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.gloss-analogy {
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.gloss-see {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gloss-chip {
+  background: var(--surface);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.gloss-chip:active { opacity: 0.7; }
+
+.card-gloss {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.card-gloss-label {
+  width: 100%;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}

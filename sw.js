@@ -1,7 +1,7 @@
 // DS Cards — Service Worker для offline
 // v0.1 — 03.06.2026
 
-const CACHE_NAME = 'dscards-v3';
+const CACHE_NAME = 'dscards-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const ASSETS = [
   './app.js',
   './manifest.json',
   './deck.json',
+  './glossary.json',
   './icon.svg'
 ];
 

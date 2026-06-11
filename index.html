@@ -45,6 +45,10 @@
       <span id="study-all-count" class="badge">0</span>
     </button>
 
+    <button id="btn-glossary" class="btn-secondary btn-glossary">
+      📖 Глоссарий / Glossary
+    </button>
+
     <h2>Колоды / Decks</h2>
     <ul id="deck-list"></ul>
   </section>
@@ -71,6 +75,7 @@
         <div class="card-label">ОТВЕТ / answer</div>
         <div id="card-back-text" class="card-text"></div>
         <div id="card-tags" class="card-tags"></div>
+        <div id="card-gloss" class="card-gloss"></div>
 
         <div class="rate-row">
           <button class="rate-btn rate-again" data-rate="1">
@@ -104,6 +109,20 @@
     </div>
   </section>
 
+  <!-- GLOSSARY: list with search -->
+  <section id="glossary" class="screen" hidden>
+    <input type="search" id="gloss-search"
+           placeholder="Поиск: merge, yield, фабрика…"
+           autocomplete="off">
+    <div id="gloss-list"></div>
+  </section>
+
+  <!-- GLOSSARY: single entry -->
+  <section id="glossary-entry" class="screen" hidden>
+    <div id="gloss-entry" class="card gloss-entry-card"></div>
+    <div id="gloss-see" class="gloss-see"></div>
+  </section>
+
   <!-- MENU: settings -->
   <section id="menu" class="screen" hidden>
     <h2>Меню / Menu</h2>
@@ -133,7 +152,7 @@
 
     <div class="menu-block">
       <h3>Версия / Build</h3>
-      <p class="muted" id="version-text">v0.3 — 11.06.2026 (fix: рендер блоков кода ```)</p>
+      <p class="muted" id="version-text">v0.4 — 11.06.2026 (📖 Глоссарий: 56 терминов + ссылки из карточек)</p>
       <p class="muted">Карточек в колоде: <span id="version-cards">—</span></p>
     </div>
   </section>

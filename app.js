@@ -26,6 +26,12 @@
   let currentCardIdx = 0;
   let currentDeckFilter = null; // null = все колоды
 
+  // глоссарий
+  let GLOSSARY = [];       // статьи из glossary.json
+  let glossaryQuery = '';  // текущий поиск
+  let currentEntryId = null;
+  let navStack = [];       // откуда пришли в статью: {screen, id?}
+
   // ============================================================
   // ИНИЦИАЛИЗАЦИЯ
   // ============================================================
@@ -35,6 +41,7 @@
     loadDailyState();
     applyTheme();
     await loadDeck();
+    await loadGlossary();
     bindEvents();
     renderHome();
     registerServiceWorker();
@@ -49,6 +56,17 @@
     } catch (e) {
       console.error('Failed to load deck.json:', e);
       DECK = [];
+    }
+  }
+
+  async function loadGlossary() {
+    try {
+      const response = await fetch('glossary.json');
+      const data = await response.json();
+      GLOSSARY = data.entries || [];
+    } catch (e) {
+      console.error('Failed to load glossary.json:', e);
+      GLOSSARY = [];
     }
   }
 
@@ -358,6 +376,24 @@
       });
     }
 
+    // ссылки в глоссарий ("не понял → провались вглубь")
+    const glossEl = document.getElementById('card-gloss');
+    glossEl.innerHTML = '';
+    const related = findEntriesForCard(card);
+    if (related.length) {
+      const label = document.createElement('div');
+      label.className = 'card-gloss-label';
+      label.textContent = 'Не понял? Подробнее:';
+      glossEl.appendChild(label);
+      related.forEach(en => {
+        const chip = document.createElement('button');
+        chip.className = 'gloss-chip';
+        chip.textContent = '📖 ' + en.term;
+        chip.addEventListener('click', () => openEntry(en.id, 'study'));
+        glossEl.appendChild(chip);
+      });
+    }
+
     // обновить предсказание интервалов на кнопках
     document.querySelectorAll('.rate-interval').forEach(el => {
       const rate = parseInt(el.dataset.int, 10);
@@ -392,6 +428,122 @@
   }
 
   // ============================================================
+  // РЕНДЕР: ГЛОССАРИЙ
+  // ============================================================
+  function entryMatchesQuery(entry, q) {
+    if (!q) return true;
+    const hay = (entry.term + ' ' + entry.id + ' ' +
+      (entry.aliases || []).join(' ') + ' ' + (entry.what || '')).toLowerCase();
+    return hay.includes(q);
+  }
+
+  function renderGlossary() {
+    showScreen('glossary');
+    document.getElementById('screen-title').textContent = 'Глоссарий';
+    document.getElementById('btn-back').hidden = false;
+
+    const input = document.getElementById('gloss-search');
+    input.value = glossaryQuery;
+
+    const q = glossaryQuery.trim().toLowerCase();
+    const list = document.getElementById('gloss-list');
+    list.innerHTML = '';
+
+    // группируем по категориям, сохраняя порядок появления
+    const cats = [];
+    const byCat = {};
+    GLOSSARY.filter(en => entryMatchesQuery(en, q)).forEach(en => {
+      if (!byCat[en.cat]) { byCat[en.cat] = []; cats.push(en.cat); }
+      byCat[en.cat].push(en);
+    });
+
+    if (cats.length === 0) {
+      list.innerHTML = '<p class="muted">Ничего не найдено</p>';
+      return;
+    }
+
+    cats.forEach(cat => {
+      const h = document.createElement('h3');
+      h.className = 'gloss-cat';
+      h.textContent = cat;
+      list.appendChild(h);
+      byCat[cat].forEach(en => {
+        const item = document.createElement('div');
+        item.className = 'gloss-item';
+        item.innerHTML =
+          `<div class="gloss-term">${escapeHtml(en.term)}</div>` +
+          `<div class="gloss-what">${escapeHtml(shorten(en.what, 80))}</div>`;
+        item.addEventListener('click', () => openEntry(en.id, 'glossary'));
+        list.appendChild(item);
+      });
+    });
+  }
+
+  function shorten(s, n) {
+    s = String(s || '');
+    return s.length > n ? s.slice(0, n - 1) + '…' : s;
+  }
+
+  // origin: 'glossary' | 'study' | 'entry' — откуда открыли статью
+  function openEntry(id, origin) {
+    if (origin === 'entry') {
+      navStack.push({ screen: 'glossary-entry', id: currentEntryId });
+    } else if (origin) {
+      navStack.push({ screen: origin });
+    }
+    renderGlossaryEntry(id);
+  }
+
+  function renderGlossaryEntry(id) {
+    const en = GLOSSARY.find(x => x.id === id);
+    if (!en) return;
+    currentEntryId = id;
+
+    showScreen('glossary-entry');
+    document.getElementById('screen-title').textContent = 'Глоссарий';
+    document.getElementById('btn-back').hidden = false;
+
+    const box = document.getElementById('gloss-entry');
+    let html = `<h2 class="gloss-entry-term">${escapeHtml(en.term)}</h2>`;
+    html += `<div class="gloss-entry-cat">${escapeHtml(en.cat)}</div>`;
+    html += `<div class="gloss-block"><div class="card-label">Что это</div>` +
+            `<div class="card-text">${formatText(en.what)}</div></div>`;
+    if (en.analogy) {
+      html += `<div class="gloss-block gloss-analogy"><div class="card-label">💡 Аналогия</div>` +
+              `<div class="card-text">${formatText(en.analogy)}</div></div>`;
+    }
+    if (en.example) {
+      html += `<div class="gloss-block"><div class="card-label">Пример</div>` +
+              `<div class="card-text">${formatText(en.example)}</div></div>`;
+    }
+    if (en.why) {
+      html += `<div class="gloss-block"><div class="card-label">🎯 Зачем в DS</div>` +
+              `<div class="card-text">${formatText(en.why)}</div></div>`;
+    }
+    box.innerHTML = html;
+
+    // связанные статьи
+    const seeBox = document.getElementById('gloss-see');
+    seeBox.innerHTML = '';
+    (en.see || []).forEach(sid => {
+      const target = GLOSSARY.find(x => x.id === sid);
+      if (!target) return;
+      const chip = document.createElement('button');
+      chip.className = 'gloss-chip';
+      chip.textContent = '📖 ' + target.term;
+      chip.addEventListener('click', () => openEntry(sid, 'entry'));
+      seeBox.appendChild(chip);
+    });
+  }
+
+  // статьи глоссария, релевантные карточке (по тегам)
+  function findEntriesForCard(card) {
+    const tags = new Set((card.tags || []).map(t => t.toLowerCase()));
+    return GLOSSARY.filter(en =>
+      tags.has(en.id) || (en.aliases || []).some(a => tags.has(a)));
+  }
+
+  // ============================================================
   // РЕНДЕР: MENU
   // ============================================================
   function renderMenu() {
@@ -418,7 +570,22 @@
   }
 
   function goBack() {
-    if (currentScreen === 'study' || currentScreen === 'menu') {
+    if (currentScreen === 'glossary-entry') {
+      const prev = navStack.pop();
+      if (prev && prev.screen === 'glossary-entry') {
+        renderGlossaryEntry(prev.id);
+      } else if (prev && prev.screen === 'study') {
+        // вернуться к открытой карточке, не сбрасывая сессию
+        showScreen('study');
+        document.getElementById('screen-title').textContent = 'Учить / Study';
+        document.getElementById('btn-back').hidden = false;
+      } else {
+        renderGlossary();
+      }
+    } else if (currentScreen === 'glossary') {
+      navStack = [];
+      renderHome();
+    } else if (currentScreen === 'study' || currentScreen === 'menu') {
       renderHome();
     }
   }
@@ -521,6 +688,16 @@
     document.getElementById('btn-back-home').addEventListener('click', renderHome);
 
     document.getElementById('btn-study-all').addEventListener('click', () => startStudy(null));
+
+    document.getElementById('btn-glossary').addEventListener('click', () => {
+      navStack = [];
+      renderGlossary();
+    });
+    document.getElementById('gloss-search').addEventListener('input', e => {
+      glossaryQuery = e.target.value;
+      renderGlossary();
+      document.getElementById('gloss-search').focus();
+    });
 
     document.getElementById('btn-show-answer').addEventListener('click', showAnswer);
 
