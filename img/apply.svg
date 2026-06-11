@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 110" font-family="sans-serif" font-size="11">
+  <g font-size="10">
+    <rect x="10" y="20" width="40" height="18" fill="#6ba8d8" opacity="0.8"/><text x="30" y="33" fill="#fff" text-anchor="middle">100</text>
+    <rect x="10" y="42" width="40" height="18" fill="#6ba8d8" opacity="0.8"/><text x="30" y="55" fill="#fff" text-anchor="middle">200</text>
+    <rect x="10" y="64" width="40" height="18" fill="#6ba8d8" opacity="0.8"/><text x="30" y="77" fill="#fff" text-anchor="middle">300</text>
+  </g>
+  <text x="62" y="55" fill="#8a96a8">→ .apply(lambda x: x/100) →</text>
+  <g font-size="10">
+    <rect x="230" y="20" width="40" height="18" fill="#90c890" opacity="0.85"/><text x="250" y="33" fill="#fff" text-anchor="middle">1.0</text>
+    <rect x="230" y="42" width="40" height="18" fill="#90c890" opacity="0.85"/><text x="250" y="55" fill="#fff" text-anchor="middle">2.0</text>
+    <rect x="230" y="64" width="40" height="18" fill="#90c890" opacity="0.85"/><text x="250" y="77" fill="#fff" text-anchor="middle">3.0</text>
+  </g>
+  <text x="10" y="100" fill="#8a96a8" font-size="10">функция к КАЖДОМУ элементу (красильщик map, нанятый в pandas)</text>
+</svg>

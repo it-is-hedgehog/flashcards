@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130" font-family="sans-serif" font-size="11">
+  <text x="10" y="14" fill="#8a96a8" font-weight="bold">ДО</text>
+  <g font-size="10">
+    <rect x="10" y="22" width="44" height="18" fill="#6ba8d8" opacity="0.7"/><text x="32" y="35" fill="#fff" text-anchor="middle">8500</text>
+    <rect x="10" y="42" width="44" height="18" fill="#e89090" opacity="0.8"/><text x="32" y="55" fill="#fff" text-anchor="middle">NaN</text>
+    <rect x="10" y="62" width="44" height="18" fill="#6ba8d8" opacity="0.7"/><text x="32" y="75" fill="#fff" text-anchor="middle">2100</text>
+    <rect x="10" y="82" width="44" height="18" fill="#e89090" opacity="0.8"/><text x="32" y="95" fill="#fff" text-anchor="middle">NaN</text>
+  </g>
+  <text x="80" y="50" fill="#8a96a8">fillna(mean) →</text>
+  <text x="80" y="90" fill="#8a96a8">ffill() →</text>
+  <g font-size="10">
+    <rect x="180" y="42" width="56 " height="18" fill="#90c890" opacity="0.85"/><text x="208" y="55" fill="#fff" text-anchor="middle">5300 ср.</text>
+    <rect x="180" y="82" width="56" height="18" fill="#f0c878" opacity="0.95"/><text x="208" y="95" fill="#333" text-anchor="middle">2100 ↑</text>
+  </g>
+  <text x="10" y="120" fill="#8a96a8" font-size="10">mean — среднее по колонке · ffill — протянуть предыдущее вниз</text>
+</svg>

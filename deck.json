@@ -1,240 +1,1295 @@
 {
-  "version": "2.0",
-  "generated": "2026-06-08",
-  "description": "v2.0 — компактные карточки под экран iPhone + фундаментальные концепты (C-код, namespace, kernel, аспект) + 11 агрегаций",
-  "cards": [
-
-    {"id":"p000","deck":"01 Python базы","front":"Что такое библиотека (модуль)?","back":"**Готовый код**, написанный кем-то — функции, классы.\n\n```\nimport math\nmath.sqrt(16)   # 4.0\n```\n\nБывают:\n• **Встроенные** (math, os, csv) — с Python\n• **Внешние** (pandas, numpy) — через `pip install`","tags":["python","import","fundamental"]},
-
-    {"id":"p001","deck":"01 Python базы","front":"Что такое алиас при импорте?","back":"**Короткое имя** для библиотеки.\n\n```\nimport pandas as pd\n       ↑          ↑\n  длинное    короткое\n```\n\nДальше `pd.read_csv(...)` вместо `pandas.read_csv(...)`.\n\n**Зачем:** короче + конвенция (все DS пишут одинаково).","tags":["python","import"]},
-
-    {"id":"p002","deck":"01 Python базы","front":"4 главных DS-алиаса","back":"```\nimport pandas as pd            # таблицы\nimport numpy as np             # массивы\nimport matplotlib.pyplot as plt # графики\nimport seaborn as sns          # красивые графики\n```\n\nЭто **конвенция**. Видишь `pd` — знаешь что pandas. Не выдумывай свои сокращения.","tags":["python","import","convention"]},
-
-    {"id":"p003","deck":"01 Python базы","front":"Зачем кавычки вокруг пути?","back":"Это **строка** (текст).\n\n```\nopen('file.csv')    ← с кавычками\nopen(file.csv)      ← без → NameError\n```\n\nБез кавычек Python думает что `file.csv` — переменная.\n\nЛюбой текст в Python — в кавычках. Одинарные или двойные равноценны.","tags":["python","strings"]},
-
-    {"id":"p004","deck":"01 Python базы","front":"`\\t` `\\n` `\\\\` в строке","back":"**Escape-последовательности** — спецсимволы.\n\n```\n'\\t'  → TAB\n'\\n'  → перенос строки\n'\\\\'  → сам слэш \\\n```\n\nЗачем `\\\\`? Чтобы написать `\\` — иначе Python ждёт спецсимвола.","tags":["python","strings","escape"]},
-
-    {"id":"p005","deck":"01 Python базы","front":"`dict['key']` vs `obj.field`","back":"**Разные синтаксисы доступа.**\n\n```\n# Словарь — квадратные скобки:\nperson = {'name': 'Tim'}\nperson['name']   # 'Tim'\n\n# Объект класса — точка:\np = Person()\np.name           # 'Tim'\n```\n\nПутать опасно: `dict.key` → AttributeError, `obj['field']` → TypeError.","tags":["python","oop","dict"]},
-
-    {"id":"p006","deck":"01 Python базы","front":"List comprehension","back":"**Краткая запись цикла создания списка.**\n\n```\n# Обычный цикл:\nresult = []\nfor x in numbers:\n    result.append(x * 2)\n\n# То же одной строкой:\nresult = [x * 2 for x in numbers]\n```\n\nС условием: `[x for x in numbers if x > 0]`","tags":["python","list","loop"]},
-
-    {"id":"p007","deck":"01 Python базы","front":"Логика `and`","back":"**ВСЕ условия True → True. Один False → всё False.**\n\n```\nTrue  and True   → True\nTrue  and False  → False\nFalse and True   → False\n```\n\n**Аналогия:** три замка на двери. Все открыты — войдёшь. Один заперт — нет.","tags":["python","logic"]},
-
-    {"id":"p008","deck":"01 Python базы","front":"`range(N)` vs `range(1, N+1)`","back":"```\nrange(5)     → 0, 1, 2, 3, 4   (с 0)\nrange(1, 6)  → 1, 2, 3, 4, 5   (с 1)\n```\n\n**Верхняя граница НЕ включается.** Чтобы получить N — пиши N+1.\n\n• С 0 — для индексов массива\n• С 1 — для математических задач","tags":["python","range","loop"]},
-
-    {"id":"p009","deck":"01 Python базы","front":"Что такое lambda?","back":"**Анонимная функция в одну строку.**\n\n```\n# Обычно:\ndef double(x):\n    return x * 2\n\n# Lambda — то же:\ndouble = lambda x: x * 2\n```\n\n`lambda аргументы: выражение`\n\nГде:\n```\nsorted(items, key=lambda x: x[1])\nmap(lambda x: x*2, numbers)\n```","tags":["python","lambda"]},
-
-    {"id":"p010","deck":"01 Python базы","front":"Что такое namespace?","back":"**Область имён — группировка чтобы не путать.**\n\n```\n# Без namespace — конфликт:\ncalculate()   ← какая?\n\n# С namespace через класс:\nMathTools.calculate()\nStringTools.calculate()   ← разные!\n```\n\nКласс = namespace для связанных функций/методов. Модуль (pandas, math) — тоже namespace.","tags":["python","namespace","fundamental"]},
-
-    {"id":"c001","deck":"02 CLI терминалы","front":"Переименовать файл/папку в Linux","back":"`mv старое новое`\n\n```\nmv test.py benchmark.py   # переименование\nmv file.txt /tmp/         # перемещение\n```\n\n**mv = move.** Одна команда для переименования и перемещения.","tags":["linux","cli"]},
-
-    {"id":"c002","deck":"02 CLI терминалы","front":"Что такое venv?","back":"**Изолированная папка с пакетами** для конкретного проекта.\n\n```\npython3 -m venv myvenv          # создать\nsource myvenv/bin/activate       # активировать\ndeactivate                       # выйти\n```\n\n**Зачем:** разные проекты могут требовать разных версий библиотек. С venv каждый в своей песочнице.","tags":["python","venv"]},
-
-    {"id":"c003","deck":"02 CLI терминалы","front":"Что такое shebang?","back":"**Первая строка скрипта** — говорит ОС какой интерпретатор использовать.\n\n```\n#!/usr/bin/env python3\nprint('Hello')\n```\n\nС `chmod +x` можно запускать `./file.py` напрямую, без `python3 file.py`.","tags":["linux","python","shebang"]},
-
-    {"id":"c004","deck":"02 CLI терминалы","front":"Почему Ubuntu блокирует pip?","back":"**Защита системного Python.**\n\n```\npip install pandas\n→ error: externally-managed-environment\n```\n\nUbuntu управляет пакетами через apt. Pip может сломать систему.\n\n**Решение:** работать только в venv.","tags":["linux","python","venv"]},
-
-    {"id":"c005","deck":"02 CLI терминалы","front":"`chmod +x file.py`","back":"**Добавляет право на исполнение.**\n\nПосле этого можно `./file.py` напрямую (без `python3 file.py`).\n\nx = executable. Также есть +r (read), +w (write).","tags":["linux","chmod"]},
-
-    {"id":"c006","deck":"02 CLI терминалы","front":"Установить pandas + Jupyter в venv","back":"```\nsource venv/bin/activate\npip install pandas\npip install ipykernel\n```\n\n**ipykernel** — мост между venv и Jupyter (без него Jupyter не увидит твой pandas).","tags":["python","venv","pip","jupyter"]},
-
-    {"id":"f001","deck":"03 Фундаментальные","front":"Что такое C-код?","back":"**Программа на языке Си** — низкоуровневый, компилируется в машинные инструкции.\n\n```\nPython: интерпретируется построчно   → медленно\nC:      скомпилирован заранее         → в 50-100× быстрее\n```\n\nPandas, NumPy = Python-обёртки над C-кодом. Снаружи Python, под капотом C.","tags":["fundamental","performance","c"]},
-
-    {"id":"f002","deck":"03 Фундаментальные","front":"Что такое kernel в Jupyter?","back":"**Ядро — Python-процесс**, который выполняет ячейки.\n\n```\nТы → ячейка → отправляется в kernel → результат\n```\n\nОдин notebook = один kernel.\nRestart Kernel = перезапуск Python (теряются переменные).","tags":["jupyter","kernel","fundamental"]},
-
-    {"id":"f003","deck":"03 Фундаментальные","front":"`cls` vs `self` в методах класса","back":"**Оба — первый параметр метода, но указывают на разное.**\n\n```\n# self → экземпляр (конкретный объект)\ndef bark(self):\n    print(self.name)\n\n# cls → сам класс\n@classmethod\ndef default(cls):\n    return cls('default.csv')\n```\n\n• `self.x` — поле объекта\n• `cls(...)` — создать новый объект класса","tags":["oop","cls","self","fundamental"]},
-
-    {"id":"f004","deck":"03 Фундаментальные","front":"\"Аспект\" в тестировании","back":"**Одна конкретная проверяемая вещь.**\n\n```\n# Метод returns_dict_with_key_X_equal_5\n\nАспект 1: возвращает dict?\nАспект 2: есть ли ключ X?\nАспект 3: значение по X равно 5?\n```\n\n**1 тест = 1 аспект:** упал — сразу видно ЧТО именно сломалось.","tags":["testing","aspect","fundamental"]},
-
-    {"id":"d4000","deck":"04 DSB4 профайлинг","front":"Что такое профайлер?","back":"**Инструмент для измерения** — где программа тратит время.\n\n```\nБез: 'программа медленная, но где?'\nС:   'функция load() = 80% времени'\n```\n\nЗачем: оптимизировать **точно**, а не наугад.","tags":["profiling","fundamental","dsb4"]},
-
-    {"id":"d4001","deck":"04 DSB4 профайлинг","front":"Что такое cProfile?","back":"**Встроенный профайлер Python.**\n\n```\npython3 -m cProfile -s tottime script.py\n```\n\nВывод:\n```\nncalls  tottime  cumtime  function\n  1     0.001    1.234    main()\n  1000  0.500    0.500    process()\n```\n\n`-s` — сортировка (tottime, ncalls и т.д.).","tags":["python","profiling","dsb4"]},
-
-    {"id":"d4002","deck":"04 DSB4 профайлинг","front":"`tottime` vs `cumtime`","back":"**Учитывать ли вложенные вызовы.**\n\n```\ndef outer():     # cumtime = 10 сек\n    inner()     # tottime = 1 сек (только сама)\n\ndef inner():     # tottime = 9 сек\n```\n\n• `tottime` — только эта функция → искать bottleneck\n• `cumtime` — с вложенными → общая картина","tags":["python","profiling"]},
-
-    {"id":"d4003","deck":"04 DSB4 профайлинг","front":"Что показывает `ncalls`?","back":"**Сколько раз функция вызвана.**\n\n```\nncalls   function\n  1      main()\n  10000  is_valid()   ← очень много!\n```\n\nФункции с большим ncalls — главные кандидаты на оптимизацию. Даже мелкое ускорение даст огромную экономию.","tags":["python","profiling"]},
-
-    {"id":"d4004","deck":"04 DSB4 профайлинг","front":"Принцип 80/20","back":"**80% времени тратится в 20% кода.**\n\nОптимизируй только эти 20% — получишь почти всю выгоду.\n\nБез профайлинга — оптимизируешь не то.\n\n*\"Premature optimization is the root of all evil.\"* — Knuth","tags":["principles","optimization"]},
-
-    {"id":"d4005","deck":"04 DSB4 профайлинг","front":"BeautifulSoup","back":"**Парсер HTML/XML** — превращает страницу в дерево объектов.\n\n```\nfrom bs4 import BeautifulSoup\nsoup = BeautifulSoup(html, 'html.parser')\n\nsoup.find('a')['href']   # 'x'\nsoup.find_all('div')      # все\n```\n\nЗачем DS: парсить веб-данные (скачал requests → распарсил BS).","tags":["python","html","dsb4"]},
-
-    {"id":"d5001","deck":"05 DSB5 эффективность","front":"timeit — что измеряет?","back":"**Точное время выполнения кода.**\n\n```\nimport timeit\ntimeit.timeit('sum(range(100))', number=10000)\n# суммарное время 10000 прогонов\n```\n\nВ Jupyter: `%timeit sum(range(100))`\n\nДля микро-операций — много прогонов чтобы шум усреднился.","tags":["python","performance"]},
-
-    {"id":"d5002","deck":"05 DSB5 эффективность","front":"map: вход → выход","back":"**N → N.** Каждый элемент трансформируется.\n\n```\nlist(map(lambda x: x*2, [1,2,3]))\n# [2, 4, 6]\n```\n\n**Аналогия:** красильщик на конвейере — покрасил каждую деталь, число то же.","tags":["python","map","dsb5"]},
-
-    {"id":"d5003","deck":"05 DSB5 эффективность","front":"filter: вход → выход","back":"**N → ≤ N.** Некоторые элементы выкидываются.\n\n```\nlist(filter(lambda x: x>2, [1,2,3,4]))\n# [3, 4]\n```\n\n**Аналогия:** браковщик на конвейере — выкинул брак, остальные прошли.","tags":["python","filter","dsb5"]},
-
-    {"id":"d5004","deck":"05 DSB5 эффективность","front":"reduce: вход → выход","back":"**N → 1.** Всё сворачивается в одно.\n\n```\nfrom functools import reduce\nreduce(lambda a,x: a+x, [1,2,3,4])\n# 10\n```\n\n**Мнемоника:** Ридикулус! (заклинание Г.Поттера) — много в одно.","tags":["python","reduce","dsb5","personal"]},
-
-    {"id":"d5005","deck":"05 DSB5 эффективность","front":"Lazy vs eager","back":"**Когда выполнить — сейчас или потом?**\n\n```\n# EAGER — выполняется сразу:\n[x*2 for x in range(1000000)]\n# миллион чисел в памяти\n\n# LAZY — по запросу:\nmap(lambda x: x*2, range(1000000))\n# ничего не посчитано до итерации\n```\n\nLazy экономит память. Но в timeit нужен `list(...)` иначе ничего не делает.","tags":["python","lazy"]},
-
-    {"id":"d5006","deck":"05 DSB5 эффективность","front":"Что такое generator (yield)?","back":"**Функция отдающая значения ПО ОДНОМУ через `yield`.**\n\n```\ndef get_one():\n    yield 1\n    yield 2\n    yield 3\n```\n\n**Мнемоника:** ел драники (yield → \"ел\", по одной за раз).\n\n`return` — всё сразу. `yield` — одно и заснул.","tags":["python","generator","personal"]},
-
-    {"id":"d5007","deck":"05 DSB5 эффективность","front":"Generator vs ordinary — экономия","back":"**В сотни раз меньше памяти + иногда быстрее.**\n\nЗамер на файле 678 MB:\n```\nordinary:   2058 MB   3.84 сек\ngenerator:    10 MB   1.96 сек\n             ↑\n        в 200× меньше\n```\n\nБыстрее: меньше нагрузки на кэш CPU.","tags":["python","generator"]},
-
-    {"id":"d5008","deck":"05 DSB5 эффективность","front":"Closure в lambda","back":"**Lambda \"помнит\" переменные снаружи.**\n\n```\nemails = [...]\nfunc = lambda: filter(emails)\n      ↑                ↑\n без аргументов   но emails известен!\n```\n\nГде встречается: `timeit(lambda: f(data))` — timeit вызывает без аргументов, но lambda тянет `data` снаружи.","tags":["python","closure"]},
-
-    {"id":"d5009","deck":"05 DSB5 эффективность","front":"Counter","back":"**Подсчёт частот в одну строку.**\n\n```\nfrom collections import Counter\nCounter('mississippi')\n# Counter({'i': 4, 's': 4, 'p': 2, 'm': 1})\n```\n\nЗамена ручному словарю с if/else. Под капотом на C — быстрее.","tags":["python","counter","collections"]},
-
-    {"id":"d5010","deck":"05 DSB5 эффективность","front":"`Counter.most_common(N)`","back":"**Топ-N самых частых.**\n\n```\nc = Counter('mississippi')\nc.most_common(2)\n# [('i', 4), ('s', 4)]\n```\n\nВернёт список пар (значение, частота), отсортированных по убыванию.","tags":["python","counter"]},
-
-    {"id":"d5011","deck":"05 DSB5 эффективность","front":"sys.argv","back":"**Список аргументов командной строки.**\n\n```\n# Запуск: python3 script.py file.csv 100\nsys.argv\n# ['script.py', 'file.csv', '100']\n#      [0]         [1]      [2]\n```\n\n**ВСЕ — строки!** Числа конвертируй: `int(sys.argv[2])`.","tags":["python","sys","cli"]},
-
-    {"id":"d5012","deck":"05 DSB5 эффективность","front":"Dict как dispatcher","back":"**Словарь функций вместо if/elif.**\n\n```\n# Вместо:\nif name == 'loop': run_loop()\nelif name == 'map': run_map()\n\n# Так:\nfunctions = {\n    'loop': run_loop,\n    'map':  run_map,\n}\nfunctions[name]()\n```\n\nАналогия: раздевалка с номерками — номерок (ключ) → куртка (функция).","tags":["python","dict","dispatcher"]},
-
-    {"id":"d6000","deck":"06 DSB6 OOP+Jupyter","front":"Класс и объект — основы","back":"**Класс = шаблон. Объект = конкретный экземпляр.**\n\n```\nclass Person:\n    pass\n\nalice = Person()   ← объект 1\nbob = Person()     ← объект 2\n```\n\nКласс один, объектов много. Группирует данные и функции вместе.","tags":["oop","class","fundamental"]},
-
-    {"id":"d6001","deck":"06 DSB6 OOP+Jupyter","front":"Класс vs объект — аналогия","back":"**Класс = чертёж дома. Объект = построенный дом.**\n\n```\nclass House:        ← чертёж\n    pass\n\nh1 = House()        ← дом 1\nh2 = House()        ← дом 2\n```\n\nЧертёж один. Домов много. Каждый сам по себе, но устроены одинаково.","tags":["oop","class","personal"]},
-
-    {"id":"d6002","deck":"06 DSB6 OOP+Jupyter","front":"`__init__` в классе","back":"**Функция-заполнитель** при создании объекта.\n\n```\nclass Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\np = Person('Tim', 30)   ← __init__ вызывается автоматически\n```\n\nАналогия: сотрудник МФЦ заполняет пустой бланк.","tags":["oop","init"]},
-
-    {"id":"d6003","deck":"06 DSB6 OOP+Jupyter","front":"`self` в методах","back":"**Указатель на ЭТОТ объект.**\n\n```\nclass Dog:\n    def __init__(self, name):\n        self.name = name\n    def bark(self):\n        print(f'{self.name}: woof')\n\nalice = Dog('Alice')\nalice.bark()   # 'Alice: woof'\n```\n\nPython подставляет автоматически: `alice.bark()` → `Dog.bark(alice)`.","tags":["oop","self"]},
-
-    {"id":"d6004","deck":"06 DSB6 OOP+Jupyter","front":"`obj.method` vs `obj.method()`","back":"**Со скобками — вызов. Без — ссылка.**\n\n```\nd = Dog()\nd.bark()    # вызов → 'woof'\nd.bark      # ссылка <method>\n```\n\nЗачем ссылка: передать функцию куда-то:\n```\nbutton.on_click(d.bark)   ← ссылка\nbutton.on_click(d.bark()) ← ОШИБКА (уже вызван)\n```","tags":["oop","method"]},
-
-    {"id":"d6005","deck":"06 DSB6 OOP+Jupyter","front":"Метод-действие vs метод-расчёт","back":"```\n# ДЕЙСТВИЕ — меняет объект, без return\ndef add(self, item):\n    self.items.append(item)\n\n# РАСЧЁТ — возвращает результат\ndef total(self):\n    return sum(...)\n```\n\n**Правило:** один метод либо меняет, либо возвращает. Не оба сразу.","tags":["oop","method"]},
-
-    {"id":"d6006","deck":"06 DSB6 OOP+Jupyter","front":"`@classmethod`","back":"**Метод КЛАССА, не объекта.** Получает `cls` (сам класс).\n\n```\nclass Movies:\n    @classmethod\n    def default(cls):\n        return cls('default.csv')\n\nMovies.default()   ← вызов через класс!\n```\n\n• `self` → конкретный объект\n• `cls` → сам класс\n\nЗачем: factory pattern (альтернативный способ создать объект).","tags":["oop","classmethod"]},
-
-    {"id":"d6007","deck":"06 DSB6 OOP+Jupyter","front":"`@staticmethod`","back":"**Функция в namespace класса** — без self, без cls.\n\n```\nclass MathTools:\n    @staticmethod\n    def is_prime(n):\n        return n > 1 and ...\n\nMathTools.is_prime(7)   ← через класс\n```\n\nЗачем: связанные утилиты вместе. Альтернатива — обычная функция в модуле.","tags":["oop","staticmethod"]},
-
-    {"id":"d6008","deck":"06 DSB6 OOP+Jupyter","front":"Factory pattern","back":"**Метод который создаёт готовый объект.**\n\n```\nclass Movies:\n    @classmethod\n    def default(cls):\n        return cls('default.csv', limit=1000)\n```\n\n```\nMovies('default.csv', 1000)   ← знать параметры\nMovies.default()              ← коротко!\n```\n\nЗачем: скрыть сложность + дать дефолты.","tags":["oop","pattern","factory"]},
-
-    {"id":"d6009","deck":"06 DSB6 OOP+Jupyter","front":"PyTest — как находит тесты","back":"**По именам.**\n\n```\nФайл:    test_*.py или *_test.py\nКласс:   class Test*\nМетод:   def test_*\n```\n\nЗапуск: `pytest` в директории.","tags":["python","testing"]},
-
-    {"id":"d6010","deck":"06 DSB6 OOP+Jupyter","front":"`isinstance(x, type)` — зачем?","back":"**Правильный способ проверки типа.**\n\n```\nisinstance(5, int)    # True ← правильно\ntype(5) == int        # True ← опасно!\n```\n\nС наследованием:\n```\nclass MyInt(int): pass\nx = MyInt(5)\n\ntype(x) == int        # False! (MyInt не int)\nisinstance(x, int)    # True (учитывает наследование)\n```","tags":["python","isinstance"]},
-
-    {"id":"d6011","deck":"06 DSB6 OOP+Jupyter","front":"Конвенция: 1 тест = 1 аспект","back":"**Аспект** = одна конкретная проверяемая вещь.\n\n```\n# ПЛОХО — 3 аспекта в одном:\ndef test_method():\n    assert isinstance(result, dict)\n    assert 'key' in result\n    assert result['key'] == 5\n\n# Упал — какой именно? Непонятно.\n```\n\n```\n# ХОРОШО — 3 отдельных:\ntest_returns_dict()\ntest_has_key()\ntest_value_correct()\n\n# Имя теста сразу говорит ЧТО сломалось.\n```","tags":["testing"]},
-
-    {"id":"d6012","deck":"06 DSB6 OOP+Jupyter","front":"csv.DictReader vs split","back":"**split(',') ломается на запятых внутри полей.**\n\n```\n'1,\"Usual Suspects, The\",1995'\n           ↑ запятая в названии!\n\nsplit(','): ['1', '\"Usual Suspects', ' The\"', '1995']\n                   ↑↑↑ разорвал название!\n\ncsv.DictReader: понимает кавычки, отдаёт dict.\n```\n\nДля CSV всегда csv.DictReader или pandas.read_csv.","tags":["python","csv"]},
-
-    {"id":"d6013","deck":"06 DSB6 OOP+Jupyter","front":"DATA_DIR через os.path","back":"**Путь относительно скрипта** (не текущей папки).\n\n```\nDATA_DIR = os.path.join(\n    os.path.dirname(os.path.abspath(__file__)),\n    '..', 'datasets'\n)\n```\n\nЛогика:\n```\n__file__   → путь скрипта\ndirname    → его папка\n'..'       → на уровень выше\n'datasets' → нужная папка\n```\n\nРаботает откуда бы ни запустили.","tags":["python","os","paths"]},
-
-    {"id":"d6014","deck":"06 DSB6 OOP+Jupyter","front":"Что такое dunder?","back":"**Системные атрибуты Python** с `__` с обеих сторон.\n\n```\n__init__       # конструктор\n__name__       # имя класса/модуля\n__file__       # путь к файлу\n__str__        # строковое представление\n```\n\n**Произношение:** dunder = double underscore.\n\nPython вызывает их сам. Ты их **определяешь**, не вызываешь напрямую.","tags":["python","dunder"]},
-
-    {"id":"d6015","deck":"06 DSB6 OOP+Jupyter","front":"Magic команды Jupyter (% и %%)","back":"**Команды Jupyter, не Python.**\n\n```\n%timeit sum(range(100))    # замер строки\n%%timeit                    # замер ячейки\n%reset                      # очистить переменные\n```\n\n• `%` — одна строка\n• `%%` — вся ячейка\n\nВ обычном .py файле **не работают**.","tags":["jupyter","magic"]},
-
-    {"id":"d6016","deck":"06 DSB6 OOP+Jupyter","front":"`ipykernel`","back":"**Мост между venv и Jupyter.**\n\n```\nБез ipykernel:\n  Jupyter → системный Python → не видит твой venv → ImportError\n\nС ipykernel:\n  Jupyter → видит venv как kernel → работает\n```\n\nУстановка: `pip install ipykernel` в venv. В Jupyter справа сверху — выбрать kernel.","tags":["jupyter","kernel"]},
-
-    {"id":"d6017","deck":"06 DSB6 OOP+Jupyter","front":"Markdown vs Code ячейки","back":"```\nMarkdown:                Code:\n# Заголовок              import pandas\n**жирный текст**         df = pd.read_csv(...)\n                         df.head()\n```\n\nГорячие клавиши (Esc → command mode):\n• `M` → markdown\n• `Y` → code\n• `Shift+Enter` → выполнить","tags":["jupyter","cells"]},
-
-    {"id":"d6018","deck":"06 DSB6 OOP+Jupyter","front":"`# region` / `# endregion`","back":"**VSCode-блоки для сворачивания кода.**\n\n```\n# region Тесты для Movies\ndef test_count(): ...\ndef test_dist():  ...\n# endregion\n```\n\nПоявляется треугольник слева — можно свернуть. Только VSCode (Python это игнорирует).","tags":["vscode"]},
-
-    {"id":"d7000","deck":"07 DSB7 Pandas","front":"Что такое DataFrame?","back":"**Excel-таблица в памяти Python.**\n\n```\n        name  | age | salary\nrow 0   Alice | 30  | 50000\nrow 1   Bob   | 25  | 60000\n```\n\n3 компонента:\n• **Колонки** — данные\n• **Индекс** — \"адресная строка\"\n• **Значения** — содержимое\n\nДоступ:\n```\ndf['name']    # колонка\ndf.iloc[0]    # строка по позиции\ndf.loc[0]     # строка по индексу\n```","tags":["pandas","dataframe","fundamental"]},
-
-    {"id":"d7001","deck":"07 DSB7 Pandas","front":"DataFrame — структура","back":"```\n        колонки →\n        ┌────┬────┐\nиндекс↓ │ A  │ B  │\n        ├────┼────┤\n   1    │ x  │... │\n   2    │ y  │... │\n        └────┴────┘\n```\n\n```\ndf.shape       # (строки, колонки)\ndf.columns     # имена колонок\ndf.index       # значения индекса\ndf.dtypes      # типы\n```","tags":["pandas","dataframe"]},
-
-    {"id":"d7002","deck":"07 DSB7 Pandas","front":"Series vs DataFrame","back":"**Series — 1D (одна колонка). DataFrame — 2D (много).**\n\n```\nSeries:        DataFrame:\n0  Alice      ┌──────┬─────┐\n1  Bob        │ name │ age │\n2  Carol      ├──────┼─────┤\n              │Alice │ 30  │\n              │Bob   │ 25  │\n              └──────┴─────┘\n```\n\nКаждая колонка DataFrame — это Series.\n```\ndf['name']         # Series\ndf[['name','age']]  # DataFrame (две колонки)\n```","tags":["pandas","series"]},
-
-    {"id":"d7003","deck":"07 DSB7 Pandas","front":"Почему Pandas быстрее Python?","back":"**Операции уходят в C-код.**\n\n```\n# Python — медленно:\nfor x in numbers: result.append(x*2)\n\n# Pandas — быстро:\ndf['col'] * 2\n```\n\nНа миллионе строк:\n```\nPython loop:  ~500 мс\nList comp:    ~300 мс\nPandas:         ~5 мс   ← 100× быстрее\n```\n\nЕсли не помнишь что такое C-код — см. карточку \"Что такое C-код?\".","tags":["pandas","performance"]},
-
-    {"id":"d7004","deck":"07 DSB7 Pandas","front":"`sep='\\t'` в read_csv","back":"**Разделитель колонок в файле.**\n\n```\nsep=','   CSV (default)\nsep='\\t'  TSV — табуляция\nsep=';'   Excel из РФ/Германии\nsep='|'   pipe-separated\n```\n\nЕсли не угадал sep — pandas прочитает в одну колонку. Проверь файл глазами!","tags":["pandas","read_csv"]},
-
-    {"id":"d7005","deck":"07 DSB7 Pandas","front":"`header=None`","back":"**Первая строка — НЕ заголовок, а данные.**\n\n```\n# Файл без шапки:\n2020-01-01,artem\n2020-01-02,oksana\n\n# Без header=None: первая строка стала именами колонок!\n# С header=None: первая строка осталась данными, колонки 0,1\n```\n\nКолонки получат имена 0, 1, 2... если ты не дал.","tags":["pandas","read_csv"]},
-
-    {"id":"d7006","deck":"07 DSB7 Pandas","front":"`names=['col1', 'col2']`","back":"**Имена колонок вручную.**\n\n```\npd.read_csv(\n    'file.csv',\n    header=None,\n    names=['datetime', 'user']\n)\n```\n\nИспользуется с `header=None` — задаём имена когда файл их не содержит.","tags":["pandas","read_csv"]},
-
-    {"id":"d7007","deck":"07 DSB7 Pandas","front":"`skiprows=[2, 3]`","back":"**Пропустить строки с указанными номерами при чтении.**\n\n```\nФайл строки: 0, 1, 2, 3, 4\nskiprows=[2, 3]\n→ читаем 0, 1, 4 (пропустили 2, 3)\n```\n\n• `skiprows=[2, 3]` — конкретные номера\n• `skiprows=2` — первые 2 строки\n\nИндексы пересчитаются с 0.","tags":["pandas","read_csv"]},
-
-    {"id":"d7008","deck":"07 DSB7 Pandas","front":"`skipfooter=2` — gotcha","back":"**Пропустить N последних строк.**\n\n```\nskipfooter=2          ← ValueError или warning!\nskipfooter=2,\nengine='python'       ← теперь работает\n```\n\nC-движок (default) не поддерживает skipfooter. Нужен python-движок.","tags":["pandas","gotcha"]},
-
-    {"id":"d7009","deck":"07 DSB7 Pandas","front":"`engine='python'`","back":"**Гибкий парсер для read_csv.**\n\n```\nengine='c'       ← default, быстрый, ограниченный\nengine='python'  ← медленнее, но больше функций (skipfooter)\n```\n\n*Practicality beats purity.* Теряем скорость ради функциональности.","tags":["pandas","engine"]},
-
-    {"id":"d7010","deck":"07 DSB7 Pandas","front":"`index_col='col'`","back":"**Делает указанную колонку индексом DataFrame.**\n\n```\n# Без index_col:\nИндекс: 0, 1 (автомат)\nКолонки: id, name, age (3)\n\n# С index_col='id':\nИндекс: значения id\nКолонки: name, age (2!)  ← id не колонка\n```\n\nПолезно для доступа `df.loc[id]`.","tags":["pandas","index"]},
-
-    {"id":"d7011","deck":"07 DSB7 Pandas","front":"`df.head()` / `df.tail()` / `df.sample()`","back":"```\ndf.head()       # первые 5\ndf.head(10)     # первые 10\ndf.tail()       # последние 5\ndf.sample(3)    # 3 случайных\n```\n\n**После каждой операции** вызывай head — проверка что произошло. Главная защита от pandas-gotcha.\n\n**Подвох:** `head(-5)` = все КРОМЕ последних 5.","tags":["pandas","inspect"]},
-
-    {"id":"d7012","deck":"07 DSB7 Pandas","front":"`df.shape`","back":"**Кортеж (строки, колонки). Индекс НЕ считается.**\n\n```\ndf.shape   # (1072, 1)\n#           ↑     ↑\n#       строки  колонки\n```\n\n```\ndf.shape[0]   # число строк\ndf.shape[1]   # число колонок\nlen(df)       # = shape[0]\n```","tags":["pandas","shape","priority"]},
-
-    {"id":"d7013","deck":"07 DSB7 Pandas","front":"Индекс vs колонка","back":"**Разные сущности.**\n\n```\nКолонки — данные.    Индекс — \"адресная строка\".\n\ndf.columns           df.index\ndf['name']           df.loc[id]\ndf.rename(columns=)  df.index.name = ...\n```\n\nGotcha: `rename(columns=)` на индексе **тихо не сработает**.","tags":["pandas","index"]},
-
-    {"id":"d7014","deck":"07 DSB7 Pandas","front":"Переименовать индекс","back":"```\n# Способ 1:\ndf.index.name = 'new_name'\n\n# Способ 2:\ndf = df.rename_axis('new_name')\n\n# ❌ НЕ работает:\ndf.rename(columns={'old':'new'})\n# Тихо игнорируется — индекс не колонка\n```","tags":["pandas","index","rename"]},
-
-    {"id":"d7015","deck":"07 DSB7 Pandas","front":"`to_csv` параметры","back":"```\ndf.to_csv('out.csv')                # default\ndf.to_csv('out.csv', sep=';')        # ; разделитель\ndf.to_csv('out.csv', index=False)    # без индекса\ndf.to_csv('out.csv', header=False)   # без заголовка\n```\n\n**Default** — пишет и заголовок, и индекс.","tags":["pandas","to_csv"]},
-
-    {"id":"d7016","deck":"07 DSB7 Pandas","front":"`to_json(orient='records')`","back":"**Сохранение в JSON.**\n\n```\ndf.to_json('out.json', orient='records')\n# [{\"name\":\"Alice\",\"age\":30},{...}]\n```\n\nОrientations:\n• `records` — массив объектов (популярно)\n• `index` — {idx: {col: val}}\n• `values` — только значения\n\nДля красивого: `indent=2`.","tags":["pandas","to_json"]},
-
-    {"id":"d7017","deck":"07 DSB7 Pandas","front":"Vectorized vs iterative","back":"**Pandas — операция на ВСЮ колонку, не построчно.**\n\n```\n# ❌ Итеративно (медленно):\nfor i in range(len(df)):\n    df.iloc[i, 0] = df.iloc[i, 0] * 2\n\n# ✅ Векторно (правильно):\ndf['col'] = df['col'] * 2\n```\n\nЕсли в pandas пишешь `for` — почти всегда делаешь неправильно.","tags":["pandas","paradigm"]},
-
-    {"id":"d7018","deck":"07 DSB7 Pandas","front":"Pandas-defaults опасны","back":"**Pandas УГАДЫВАЕТ что у тебя в файле.**\n\nКаждый параметр read_csv = отключение default'a:\n```\nsep='\\t'      ← вместо ','\nheader=None   ← вместо \"первая строка — заголовок\"\nnames=[...]   ← задать имена\n```\n\nMantra: \"Explicit is better than implicit\".\n\nПеред чтением — посмотри 3 строки файла глазами.","tags":["pandas","principles"]},
-
-    {"id":"d7019","deck":"07 DSB7 Pandas","front":"Откуда название Pandas?","back":"**От \"panel data\"** в эконометрике.\n\nPanel data = наблюдения за одними объектами в разные периоды.\n\n```\nApple    2020  100\nApple    2021  120\nGoogle   2020   80\n```\n\nНе от животного. Логотип — маркетинг.","tags":["pandas","history"]},
-
-    {"id":"d7020","deck":"07 DSB7 Pandas","front":"`df.count()` vs `df.shape[0]`","back":"**Считают разное.**\n\n```\nDataFrame с NaN:\n  Alice  | 30\n  Bob    | NaN\n  Carol  | 35\n\ndf.shape[0]   # 3   (все строки)\ndf.count()    # name: 3, age: 2   (не-NaN)\n```\n\n**Назначение count()** — диагностика пропусков.","tags":["pandas","count","priority"]},
-
-    {"id":"d7021","deck":"07 DSB7 Pandas","front":"`df.count()` vs `df['col'].count()`","back":"**Зависит на чём вызвал.**\n\n```\n# DataFrame-метод → Series по колонкам:\ndf.count()\n# name    1076\n# age     1070\n\n# Series-метод → одно число:\ndf['name'].count()\n# 1076\n```","tags":["pandas","count","priority"]},
-
-    {"id":"d7022","deck":"07 DSB7 Pandas","front":"`value_counts()`","back":"**Распределение значений в колонке.**\n\n```\ndf['city'].value_counts()\n# Moscow    3\n# SPb       2\n# Kazan     1\n```\n\nВозвращает Series: значение → частота. Отсортировано по убыванию.\n\nАналог `Counter.most_common()` из DSB5.","tags":["pandas","value_counts","priority"]},
-
-    {"id":"d7023","deck":"07 DSB7 Pandas","front":"count vs value_counts","back":"**Считают разное!**\n\n```\ncolumn: ['Moscow', 'SPb', 'Moscow', NaN, 'Moscow']\n\ndf['col'].count()       # 4   (не-NaN)\ndf['col'].value_counts()# Moscow:3, SPb:1 (распределение)\n```\n\n• `count` — \"сколько данных у меня\" (диагностика)\n• `value_counts` — \"что в этих данных\" (распределение)","tags":["pandas","priority"]},
-
-    {"id":"d7024","deck":"07 DSB7 Pandas","front":"`drop_duplicates()`","back":"**Удаление повторяющихся строк.**\n\n```\ndf = df.drop_duplicates(\n    subset=['CarNumber', 'Make'],\n    keep='last'\n)\n```\n\n• `subset` — по каким колонкам считать дубль\n• `keep` — 'first' (default), 'last', False (удалить все)\n\n**КРИТИЧНО:** не забыть `df = ...` иначе тихо не сработает!","tags":["pandas","cleaning","priority"]},
-
-    {"id":"d7025","deck":"07 DSB7 Pandas","front":"NaN — что это?","back":"**Not a Number — обозначение пропуска в pandas.**\n\nОткуда:\n• Пустое поле в форме\n• Сломанный датчик\n• Объединение таблиц без пары\n\n```\nname   age   salary\nAlice  30    50000\nBob    NaN   60000   ← пропуск\n```\n\nПроверка: `pd.isna(x)` или `df.isna()`.","tags":["pandas","nan","fundamental"]},
-
-    {"id":"d7026","deck":"07 DSB7 Pandas","front":"`isna().sum()` — подсчёт пропусков","back":"**Сколько NaN в каждой колонке.**\n\n```\ndf.isna()\n# Series True/False по каждой ячейке\n\ndf.isna().sum()\n# name    0\n# age     1   ← один NaN\n```\n\nTrue = 1, False = 0. Сумма True = число NaN.\n\nСтандартный первый шаг после read_csv.","tags":["pandas","nan","priority"]},
-
-    {"id":"d7027","deck":"07 DSB7 Pandas","front":"`dropna(thresh, axis)`","back":"**Thresh смотрит на ВАЛИДНЫЕ значения!** (Инвертированная логика)\n\n```\ndf.dropna(thresh=500, axis=1)\n# Оставить колонки где ≥500 не-NaN\n# (= удалить где <500 валидных)\n```\n\n• `axis=0` → строки\n• `axis=1` → колонки\n\nМнемоника осей: дробь — 0 числитель, 1 знаменатель.","tags":["pandas","cleaning","priority"]},
-
-    {"id":"d7028","deck":"07 DSB7 Pandas","front":"`fillna` и `ffill`","back":"**Заполнение пропусков.**\n\n```\n# Значением:\ndf['col'] = df['col'].fillna(0)\ndf['col'] = df['col'].fillna(df['col'].mean())\n\n# Forward fill — взять сверху:\ndf['col'] = df['col'].ffill()\n```\n\n⚠️ Старый синтаксис `fillna(method='ffill')` **удалён в pandas 2.2+**. Только `ffill()` напрямую.","tags":["pandas","cleaning","priority"]},
-
-    {"id":"d7029","deck":"07 DSB7 Pandas","front":"Boolean filtering","back":"**Отбор строк по условию. 2 шага.**\n\n```\n# Маска (T/F по строкам):\nmask = df['age'] > 25\n\n# Применить:\ndf[mask]\n\n# В одну строку:\ndf[df['age'] > 25]\n```\n\nСоставное условие:\n```\ndf[(df['age'] > 25) & (df['city'] == 'Moscow')]\n   ↑                ↑                        ↑\n  скобки           AND                    скобки\n```\n\nСкобки **обязательны!**\n\n`&` AND, `|` OR, `~` NOT.","tags":["pandas","filter","fundamental","priority"]},
-
-    {"id":"d7030","deck":"07 DSB7 Pandas","front":"`.dt` акcессор","back":"**Доступ к date-методам** (только на datetime64).\n\n```\ndf['date'] = pd.to_datetime(df['date'])\n\ndf['date'].dt.year        # 2020\ndf['date'].dt.month       # 4\ndf['date'].dt.day_name()  # 'Friday' (метод!)\n```\n\nСемейство акcессоров:\n• `.dt` — datetime\n• `.str` — строки\n• `.cat` — категории","tags":["pandas","datetime","accessor"]},
-
-    {"id":"d7031","deck":"07 DSB7 Pandas","front":"`pd.cut()` — категоризация","back":"**Превращает числа в категории по интервалам.**\n\n```\npd.cut(\n    hours,\n    bins=[-1, 3, 11, 17, 23],\n    labels=['night', 'morning', 'day', 'evening']\n)\n```\n\nN меток → нужно **N+1** границ.\n\nАналогия: оценки в школе.\n```\nБаллы [0, 60, 70, 80, 90, 100]\nОценки   F   D   C   B   A    ← 5 меток, 6 границ\n```","tags":["pandas","cut","category"]},
-
-    {"id":"d7032","deck":"07 DSB7 Pandas","front":"`apply()` — мост в Python","back":"**Применяет функцию к каждому элементу.**\n\n```\n# На Series — каждому значению:\ndf['col'].apply(lambda x: x * 2)\n\n# На DataFrame с axis=1 — каждой строке:\ndf.apply(lambda row: row['a'] + row['b'], axis=1)\n```\n\nКогда нужен apply: нет готовой векторной операции.\n\n⚠️ apply медленнее настоящих векторных. Если есть встроенный pandas-метод — используй его.","tags":["pandas","apply"]},
-
-    {"id":"d7033","deck":"07 DSB7 Pandas","front":"`str.split(' ', n=1, expand=True)`","back":"**Разделение колонки на несколько новых.**\n\n```\ndf[['first', 'last']] = df['name'].str.split(' ', n=1, expand=True)\n```\n\n```\n'Alice Smith'  → first='Alice', last='Smith'\n'Carol'        → first='Carol', last=None   ← graceful!\n```\n\n• `n=1` — максимум одно разделение\n• `expand=True` — DataFrame, не Series списков","tags":["pandas","str","split"]},
-
-    {"id":"d7034","deck":"07 DSB7 Pandas","front":"Pandas-gotcha №1: без присваивания","back":"**Большинство методов возвращают НОВЫЙ DataFrame.**\n\n```\n# ❌ НЕ работает:\ndf.drop_duplicates()\n# вернул новый и забыл\n# df без изменений\n\n# ✅ Правильно:\ndf = df.drop_duplicates()\n```\n\nКоснётся: drop_duplicates, dropna, fillna, rename, set_index, sort_values...\n\n**Проверка:** после операции `df.shape` — не изменилось → забыл `=`.","tags":["pandas","gotcha","priority","fundamental"]},
-
-    {"id":"d7035","deck":"07 DSB7 Pandas","front":"Pandas-gotcha №2: симметрия присваивания","back":"**Слева и справа должны быть одной формы.**\n\n```\n# ❌ Маленькое в большое — катастрофа:\nauto = auto['Refund'].fillna(0)\n# DataFrame ← Series — теряем DataFrame!\n\n# ✅ Симметрично:\nauto['Refund'] = auto['Refund'].fillna(0)\n# колонка ← колонка\n```\n\n**Мнемоника:** маленькое в маленькое, большое в большое.","tags":["pandas","gotcha","priority","fundamental"]},
-
-    {"id":"a001","deck":"08 Pandas агрегации","front":"Что такое агрегация?","back":"**N значений → 1 значение.** Сжать колонку в одно число.\n\n```\n[1, 5, 3, 8, 2]\n       ↓\n   sum  → 19\n   mean → 3.8\n   min  → 1\n```\n\nЭто reduce из DSB5 (Ридикулус!), только pandas-API.","tags":["pandas","aggregation","fundamental"]},
-
-    {"id":"a002","deck":"08 Pandas агрегации","front":"`.sum()`","back":"**Сумма всех значений.**\n\n```\ndf['fines'].sum()   # 1234567\n```\n\nNaN игнорируется по умолчанию.\n\nПосле groupby — сумма в каждой группе:\n```\ndf.groupby('Make')['Fines'].sum()\n```","tags":["pandas","aggregation","sum"]},
-
-    {"id":"a003","deck":"08 Pandas агрегации","front":"`.mean()` vs `.median()`","back":"**Mean — среднее. Median — центральное.**\n\n```\nЗарплаты: [30, 40, 50, 60, 1000]\n                              ↑ выброс\n\nmean   = 236   ← искажено\nmedian =  50   ← устойчиво\n```\n\n**Когда что:**\n• mean — нормальные распределения\n• median — есть выбросы (зарплаты, цены)","tags":["pandas","mean","median"]},
-
-    {"id":"a004","deck":"08 Pandas агрегации","front":"`.min()` `.max()`","back":"**Минимум и максимум.**\n\n```\ndf['fines'].min()   # 100\ndf['fines'].max()   # 50000\n```\n\nНа строках — алфавитный порядок.\n\nЗачем:\n• Outliers (необычно высокие/низкие)\n• Range = max - min\n• Sanity check (нет ли отрицательных)","tags":["pandas","min","max"]},
-
-    {"id":"a005","deck":"08 Pandas агрегации","front":"`.count()` (как агрегация)","back":"**Сколько НЕ-NaN.**\n\n```\n[10, 20, NaN, 30, NaN]\ncount() → 3   (5 - 2 NaN)\n```\n\nНа DataFrame — Series по колонкам.\n\nПосле groupby — размер группы.\n\nNOT `len(df)`: len считает все, count только не-NaN.","tags":["pandas","count"]},
-
-    {"id":"a006","deck":"08 Pandas агрегации","front":"`.std()` — стандартное отклонение","back":"**Мера разброса вокруг среднего.**\n\n```\n[50, 50, 50, 50]      std = 0     ← одинаковые\n[40, 45, 55, 60]      std = 8.5   ← разные\n[10, 30, 70, 90]      std = 36.5  ← очень разные\n```\n\nЗачем:\n• Сравнить разброс групп\n• Outliers (>3 std от mean)\n• Надёжность среднего","tags":["pandas","std","statistics"]},
-
-    {"id":"a007","deck":"08 Pandas агрегации","front":"`.var()` — дисперсия","back":"**Квадрат стандартного отклонения.**\n\n```\nstd = 5    →   var = 25\nstd = 10   →   var = 100\n```\n\n• `std` — в тех же единицах (рубли)\n• `var` — в квадратных (рубли²)\n\nstd понятнее на практике. var — в теоретических формулах.","tags":["pandas","var"]},
-
-    {"id":"a008","deck":"08 Pandas агрегации","front":"`.first()` `.last()`","back":"**Первый/последний после groupby.**\n\n```\ndf.groupby('Make')['Model'].first()\n# Ford      Focus    ← первый Ford\n# Toyota    Camry\n```\n\nПорядок важен — зависит от порядка строк.\n\nПодвох: если не отсортировано — \"первый\" случайный. Сначала `sort_values()`.","tags":["pandas","first","last"]},
-
-    {"id":"a009","deck":"08 Pandas агрегации","front":"`.nunique()`","back":"**Сколько уникальных значений.**\n\n```\n['alex', 'bob', 'alex', 'carol']\ncount()    # 4\nnunique()  # 3   (alex, bob, carol)\n```\n\nЗачем:\n• Сколько разных клиентов?\n• Сколько городов в каждой стране?\n• Cardinality колонки\n\n`dropna=False` — включить NaN в подсчёт.","tags":["pandas","nunique"]},
-
-    {"id":"a010","deck":"08 Pandas агрегации","front":"`.agg([...])` — несколько сразу","back":"**Несколько агрегаций за один проход.**\n\n```\n# Отдельно — 3 команды:\ndf.groupby('Make')['Fines'].min()\ndf.groupby('Make')['Fines'].max()\ndf.groupby('Make')['Fines'].mean()\n\n# Через agg — одна:\ndf.groupby('Make')['Fines'].agg(['min','max','mean'])\n```\n\nРезультат — DataFrame с колонками min, max, mean.","tags":["pandas","agg","priority"]},
-
-    {"id":"a011","deck":"08 Pandas агрегации","front":"`groupby` — Split-Apply-Combine","back":"**3-этапный паттерн** — основа аналитики.\n\n```\nfines.groupby('Make')['Fines'].median()\n  1        2           3        4\n```\n\n1. DataFrame (широко)\n2. **Split** — разбить на группы (узко)\n3. **Apply** — функция к каждой\n4. **Combine** — собрать результаты\n\nАналогия — **песочные часы**.","tags":["pandas","groupby","fundamental","priority"]},
-
-    {"id":"m001","deck":"99 Личные мнемоники","front":"`reduce` → ???","back":"**Ридикулус!**\n\nЗаклинание Г.Поттера — превращает много в одно.\n\nReduce: [1,2,3,4] → 10","tags":["mnemonic","reduce"]},
-
-    {"id":"m002","deck":"99 Личные мнемоники","front":"`yield` → ???","back":"**\"ел драники\"**\n\nЗвук: yield → \"йил-д\" → \"ел\".\nФизика: драники едят по одному, не сразу всю тарелку.\n\nГенератор отдаёт по одному.","tags":["mnemonic","yield"]},
-
-    {"id":"m003","deck":"99 Личные мнемоники","front":"Класс → ???","back":"**Печатный станок** (шаблон).\nОбъект = напечатанный продукт.\n\nСтанок один — продуктов много.","tags":["mnemonic","class"]},
-
-    {"id":"m004","deck":"99 Личные мнемоники","front":"`dict[ключ]` → ???","back":"**Раздевалка с номерками.**\n\nНомерок (ключ) → куртка (значение).","tags":["mnemonic","dict"]},
-
-    {"id":"m005","deck":"99 Личные мнемоники","front":"Pandas → ???","back":"**Excel в памяти Python.**\n\nТолько мощнее, программируемее, миллионы строк.","tags":["mnemonic","pandas"]},
-
-    {"id":"m006","deck":"99 Личные мнемоники","front":"`map` vs `filter` → ???","back":"• `map` = **красильщик** (покрасил каждую)\n• `filter` = **браковщик** (выкинул брак)","tags":["mnemonic","map","filter"]},
-
-    {"id":"m007","deck":"99 Личные мнемоники","front":"`and` → ???","back":"**Три замка на двери.**\n\nВсе открыты → войдёшь. Один заперт → нет.","tags":["mnemonic","and"]},
-
-    {"id":"m008","deck":"99 Личные мнемоники","front":"generator vs ordinary → ???","back":"**Кастрюля vs тарелочка.**\n\nOrdinary = всю кастрюлю на стол (память на ГБ).\nGenerator = тарелочки по одной (память на КБ).","tags":["mnemonic","generator"]},
-
-    {"id":"m009","deck":"99 Личные мнемоники","front":"axis 0/1 → ???","back":"**Дробь.**\n\naxis=0 → числитель (сверху-снизу) — СТРОКИ\naxis=1 → знаменатель (влево-вправо) — КОЛОНКИ\n\nРаботает везде: sum, apply, drop, dropna.","tags":["mnemonic","axis"]},
-
-    {"id":"m010","deck":"99 Личные мнемоники","front":"Симметрия присваивания → ???","back":"**Маленькое в маленькое, большое в большое.**\n\n```\ndf['col'] = df['col'] * 2   ← симметрично\ndf = df.dropna()             ← симметрично\n\ndf = df['col'].fillna(0)     ← НЕТ! теряем DF\n```","tags":["mnemonic","assignment","priority"]},
-
-    {"id":"m011","deck":"99 Личные мнемоники","front":"groupby → ???","back":"**Песочные часы.**\n\n```\n┌────┐   все данные (широко)\n└──┬─┘\n   ↓ split\n  ┴┴┴    группы по отдельности (узко)\n   ↓ apply\n┌────┐   результаты (широко)\n└────┘\n```\n\nSplit → Apply → Combine.","tags":["mnemonic","groupby","priority"]}
-
-  ]
+ "version": "2.0",
+ "generated": "2026-06-08",
+ "description": "v2.0 — компактные карточки под экран iPhone + фундаментальные концепты (C-код, namespace, kernel, аспект) + 11 агрегаций",
+ "cards": [
+  {
+   "id": "p000",
+   "deck": "01 Python базы",
+   "front": "Что такое библиотека (модуль)?",
+   "back": "**Готовый код**, написанный кем-то — функции, классы.\n\n```\nimport math\nmath.sqrt(16)   # 4.0\n```\n\nБывают:\n• **Встроенные** (math, os, csv) — с Python\n• **Внешние** (pandas, numpy) — через `pip install`",
+   "tags": [
+    "python",
+    "import",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "p001",
+   "deck": "01 Python базы",
+   "front": "Что такое алиас при импорте?",
+   "back": "**Короткое имя** для библиотеки.\n\n```\nimport pandas as pd\n       ↑          ↑\n  длинное    короткое\n```\n\nДальше `pd.read_csv(...)` вместо `pandas.read_csv(...)`.\n\n**Зачем:** короче + конвенция (все DS пишут одинаково).",
+   "tags": [
+    "python",
+    "import"
+   ]
+  },
+  {
+   "id": "p002",
+   "deck": "01 Python базы",
+   "front": "4 главных DS-алиаса",
+   "back": "```\nimport pandas as pd            # таблицы\nimport numpy as np             # массивы\nimport matplotlib.pyplot as plt # графики\nimport seaborn as sns          # красивые графики\n```\n\nЭто **конвенция**. Видишь `pd` — знаешь что pandas. Не выдумывай свои сокращения.",
+   "tags": [
+    "python",
+    "import",
+    "convention"
+   ]
+  },
+  {
+   "id": "p003",
+   "deck": "01 Python базы",
+   "front": "Зачем кавычки вокруг пути?",
+   "back": "Это **строка** (текст).\n\n```\nopen('file.csv')    ← с кавычками\nopen(file.csv)      ← без → NameError\n```\n\nБез кавычек Python думает что `file.csv` — переменная.\n\nЛюбой текст в Python — в кавычках. Одинарные или двойные равноценны.",
+   "tags": [
+    "python",
+    "strings"
+   ]
+  },
+  {
+   "id": "p004",
+   "deck": "01 Python базы",
+   "front": "`\\t` `\\n` `\\\\` в строке",
+   "back": "**Escape-последовательности** — спецсимволы.\n\n```\n'\\t'  → TAB\n'\\n'  → перенос строки\n'\\\\'  → сам слэш \\\n```\n\nЗачем `\\\\`? Чтобы написать `\\` — иначе Python ждёт спецсимвола.",
+   "tags": [
+    "python",
+    "strings",
+    "escape"
+   ]
+  },
+  {
+   "id": "p005",
+   "deck": "01 Python базы",
+   "front": "`dict['key']` vs `obj.field`",
+   "back": "**Разные синтаксисы доступа.**\n\n```\n# Словарь — квадратные скобки:\nperson = {'name': 'Tim'}\nperson['name']   # 'Tim'\n\n# Объект класса — точка:\np = Person()\np.name           # 'Tim'\n```\n\nПутать опасно: `dict.key` → AttributeError, `obj['field']` → TypeError.",
+   "tags": [
+    "python",
+    "oop",
+    "dict"
+   ]
+  },
+  {
+   "id": "p006",
+   "deck": "01 Python базы",
+   "front": "List comprehension",
+   "back": "**Краткая запись цикла создания списка.**\n\n```\n# Обычный цикл:\nresult = []\nfor x in numbers:\n    result.append(x * 2)\n\n# То же одной строкой:\nresult = [x * 2 for x in numbers]\n```\n\nС условием: `[x for x in numbers if x > 0]`",
+   "tags": [
+    "python",
+    "list",
+    "loop"
+   ]
+  },
+  {
+   "id": "p007",
+   "deck": "01 Python базы",
+   "front": "Логика `and`",
+   "back": "**ВСЕ условия True → True. Один False → всё False.**\n\n```\nTrue  and True   → True\nTrue  and False  → False\nFalse and True   → False\n```\n\n**Аналогия:** три замка на двери. Все открыты — войдёшь. Один заперт — нет.",
+   "tags": [
+    "python",
+    "logic"
+   ]
+  },
+  {
+   "id": "p008",
+   "deck": "01 Python базы",
+   "front": "`range(N)` vs `range(1, N+1)`",
+   "back": "```\nrange(5)     → 0, 1, 2, 3, 4   (с 0)\nrange(1, 6)  → 1, 2, 3, 4, 5   (с 1)\n```\n\n**Верхняя граница НЕ включается.** Чтобы получить N — пиши N+1.\n\n• С 0 — для индексов массива\n• С 1 — для математических задач",
+   "tags": [
+    "python",
+    "range",
+    "loop"
+   ]
+  },
+  {
+   "id": "p009",
+   "deck": "01 Python базы",
+   "front": "Что такое lambda?",
+   "back": "**Анонимная функция в одну строку.**\n\n```\n# Обычно:\ndef double(x):\n    return x * 2\n\n# Lambda — то же:\ndouble = lambda x: x * 2\n```\n\n`lambda аргументы: выражение`\n\nГде:\n```\nsorted(items, key=lambda x: x[1])\nmap(lambda x: x*2, numbers)\n```",
+   "tags": [
+    "python",
+    "lambda"
+   ]
+  },
+  {
+   "id": "p010",
+   "deck": "01 Python базы",
+   "front": "Что такое namespace?",
+   "back": "**Область имён — группировка чтобы не путать.**\n\n```\n# Без namespace — конфликт:\ncalculate()   ← какая?\n\n# С namespace через класс:\nMathTools.calculate()\nStringTools.calculate()   ← разные!\n```\n\nКласс = namespace для связанных функций/методов. Модуль (pandas, math) — тоже namespace.",
+   "tags": [
+    "python",
+    "namespace",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "c001",
+   "deck": "02 CLI терминалы",
+   "front": "Переименовать файл/папку в Linux",
+   "back": "`mv старое новое`\n\n```\nmv test.py benchmark.py   # переименование\nmv file.txt /tmp/         # перемещение\n```\n\n**mv = move.** Одна команда для переименования и перемещения.",
+   "tags": [
+    "linux",
+    "cli"
+   ]
+  },
+  {
+   "id": "c002",
+   "deck": "02 CLI терминалы",
+   "front": "Что такое venv?",
+   "back": "**Изолированная папка с пакетами** для конкретного проекта.\n\n```\npython3 -m venv myvenv          # создать\nsource myvenv/bin/activate       # активировать\ndeactivate                       # выйти\n```\n\n**Зачем:** разные проекты могут требовать разных версий библиотек. С venv каждый в своей песочнице.",
+   "tags": [
+    "python",
+    "venv"
+   ]
+  },
+  {
+   "id": "c003",
+   "deck": "02 CLI терминалы",
+   "front": "Что такое shebang?",
+   "back": "**Первая строка скрипта** — говорит ОС какой интерпретатор использовать.\n\n```\n#!/usr/bin/env python3\nprint('Hello')\n```\n\nС `chmod +x` можно запускать `./file.py` напрямую, без `python3 file.py`.",
+   "tags": [
+    "linux",
+    "python",
+    "shebang"
+   ]
+  },
+  {
+   "id": "c004",
+   "deck": "02 CLI терминалы",
+   "front": "Почему Ubuntu блокирует pip?",
+   "back": "**Защита системного Python.**\n\n```\npip install pandas\n→ error: externally-managed-environment\n```\n\nUbuntu управляет пакетами через apt. Pip может сломать систему.\n\n**Решение:** работать только в venv.",
+   "tags": [
+    "linux",
+    "python",
+    "venv"
+   ]
+  },
+  {
+   "id": "c005",
+   "deck": "02 CLI терминалы",
+   "front": "`chmod +x file.py`",
+   "back": "**Добавляет право на исполнение.**\n\nПосле этого можно `./file.py` напрямую (без `python3 file.py`).\n\nx = executable. Также есть +r (read), +w (write).",
+   "tags": [
+    "linux",
+    "chmod"
+   ]
+  },
+  {
+   "id": "c006",
+   "deck": "02 CLI терминалы",
+   "front": "Установить pandas + Jupyter в venv",
+   "back": "```\nsource venv/bin/activate\npip install pandas\npip install ipykernel\n```\n\n**ipykernel** — мост между venv и Jupyter (без него Jupyter не увидит твой pandas).",
+   "tags": [
+    "python",
+    "venv",
+    "pip",
+    "jupyter"
+   ]
+  },
+  {
+   "id": "f001",
+   "deck": "03 Фундаментальные",
+   "front": "Что такое C-код?",
+   "back": "**Программа на языке Си** — низкоуровневый, компилируется в машинные инструкции.\n\n```\nPython: интерпретируется построчно   → медленно\nC:      скомпилирован заранее         → в 50-100× быстрее\n```\n\nPandas, NumPy = Python-обёртки над C-кодом. Снаружи Python, под капотом C.",
+   "tags": [
+    "fundamental",
+    "performance",
+    "c"
+   ]
+  },
+  {
+   "id": "f002",
+   "deck": "03 Фундаментальные",
+   "front": "Что такое kernel в Jupyter?",
+   "back": "**Ядро — Python-процесс**, который выполняет ячейки.\n\n```\nТы → ячейка → отправляется в kernel → результат\n```\n\nОдин notebook = один kernel.\nRestart Kernel = перезапуск Python (теряются переменные).",
+   "tags": [
+    "jupyter",
+    "kernel",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "f003",
+   "deck": "03 Фундаментальные",
+   "front": "`cls` vs `self` в методах класса",
+   "back": "**Оба — первый параметр метода, но указывают на разное.**\n\n```\n# self → экземпляр (конкретный объект)\ndef bark(self):\n    print(self.name)\n\n# cls → сам класс\n@classmethod\ndef default(cls):\n    return cls('default.csv')\n```\n\n• `self.x` — поле объекта\n• `cls(...)` — создать новый объект класса",
+   "tags": [
+    "oop",
+    "cls",
+    "self",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "f004",
+   "deck": "03 Фундаментальные",
+   "front": "\"Аспект\" в тестировании",
+   "back": "**Одна конкретная проверяемая вещь.**\n\n```\n# Метод returns_dict_with_key_X_equal_5\n\nАспект 1: возвращает dict?\nАспект 2: есть ли ключ X?\nАспект 3: значение по X равно 5?\n```\n\n**1 тест = 1 аспект:** упал — сразу видно ЧТО именно сломалось.",
+   "tags": [
+    "testing",
+    "aspect",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "d4000",
+   "deck": "04 DSB4 профайлинг",
+   "front": "Что такое профайлер?",
+   "back": "**Инструмент для измерения** — где программа тратит время.\n\n```\nБез: 'программа медленная, но где?'\nС:   'функция load() = 80% времени'\n```\n\nЗачем: оптимизировать **точно**, а не наугад.",
+   "tags": [
+    "profiling",
+    "fundamental",
+    "dsb4"
+   ]
+  },
+  {
+   "id": "d4001",
+   "deck": "04 DSB4 профайлинг",
+   "front": "Что такое cProfile?",
+   "back": "**Встроенный профайлер Python.**\n\n```\npython3 -m cProfile -s tottime script.py\n```\n\nВывод:\n```\nncalls  tottime  cumtime  function\n  1     0.001    1.234    main()\n  1000  0.500    0.500    process()\n```\n\n`-s` — сортировка (tottime, ncalls и т.д.).",
+   "tags": [
+    "python",
+    "profiling",
+    "dsb4"
+   ]
+  },
+  {
+   "id": "d4002",
+   "deck": "04 DSB4 профайлинг",
+   "front": "`tottime` vs `cumtime`",
+   "back": "**Учитывать ли вложенные вызовы.**\n\n```\ndef outer():     # cumtime = 10 сек\n    inner()     # tottime = 1 сек (только сама)\n\ndef inner():     # tottime = 9 сек\n```\n\n• `tottime` — только эта функция → искать bottleneck\n• `cumtime` — с вложенными → общая картина",
+   "tags": [
+    "python",
+    "profiling"
+   ]
+  },
+  {
+   "id": "d4003",
+   "deck": "04 DSB4 профайлинг",
+   "front": "Что показывает `ncalls`?",
+   "back": "**Сколько раз функция вызвана.**\n\n```\nncalls   function\n  1      main()\n  10000  is_valid()   ← очень много!\n```\n\nФункции с большим ncalls — главные кандидаты на оптимизацию. Даже мелкое ускорение даст огромную экономию.",
+   "tags": [
+    "python",
+    "profiling"
+   ]
+  },
+  {
+   "id": "d4004",
+   "deck": "04 DSB4 профайлинг",
+   "front": "Принцип 80/20",
+   "back": "**80% времени тратится в 20% кода.**\n\nОптимизируй только эти 20% — получишь почти всю выгоду.\n\nБез профайлинга — оптимизируешь не то.\n\n*\"Premature optimization is the root of all evil.\"* — Knuth",
+   "tags": [
+    "principles",
+    "optimization"
+   ]
+  },
+  {
+   "id": "d4005",
+   "deck": "04 DSB4 профайлинг",
+   "front": "BeautifulSoup",
+   "back": "**Парсер HTML/XML** — превращает страницу в дерево объектов.\n\n```\nfrom bs4 import BeautifulSoup\nsoup = BeautifulSoup(html, 'html.parser')\n\nsoup.find('a')['href']   # 'x'\nsoup.find_all('div')      # все\n```\n\nЗачем DS: парсить веб-данные (скачал requests → распарсил BS).",
+   "tags": [
+    "python",
+    "html",
+    "dsb4"
+   ]
+  },
+  {
+   "id": "d5001",
+   "deck": "05 DSB5 эффективность",
+   "front": "timeit — что измеряет?",
+   "back": "**Точное время выполнения кода.**\n\n```\nimport timeit\ntimeit.timeit('sum(range(100))', number=10000)\n# суммарное время 10000 прогонов\n```\n\nВ Jupyter: `%timeit sum(range(100))`\n\nДля микро-операций — много прогонов чтобы шум усреднился.",
+   "tags": [
+    "python",
+    "performance"
+   ]
+  },
+  {
+   "id": "d5002",
+   "deck": "05 DSB5 эффективность",
+   "front": "map: вход → выход",
+   "back": "**N → N.** Каждый элемент трансформируется.\n\n```\nlist(map(lambda x: x*2, [1,2,3]))\n# [2, 4, 6]\n```\n\n**Аналогия:** красильщик на конвейере — покрасил каждую деталь, число то же.",
+   "tags": [
+    "python",
+    "map",
+    "dsb5"
+   ]
+  },
+  {
+   "id": "d5003",
+   "deck": "05 DSB5 эффективность",
+   "front": "filter: вход → выход",
+   "back": "**N → ≤ N.** Некоторые элементы выкидываются.\n\n```\nlist(filter(lambda x: x>2, [1,2,3,4]))\n# [3, 4]\n```\n\n**Аналогия:** браковщик на конвейере — выкинул брак, остальные прошли.",
+   "tags": [
+    "python",
+    "filter",
+    "dsb5"
+   ]
+  },
+  {
+   "id": "d5004",
+   "deck": "05 DSB5 эффективность",
+   "front": "reduce: вход → выход",
+   "back": "**N → 1.** Всё сворачивается в одно.\n\n```\nfrom functools import reduce\nreduce(lambda a,x: a+x, [1,2,3,4])\n# 10\n```\n\n**Мнемоника:** Ридикулус! (заклинание Г.Поттера) — много в одно.",
+   "tags": [
+    "python",
+    "reduce",
+    "dsb5",
+    "personal"
+   ]
+  },
+  {
+   "id": "d5005",
+   "deck": "05 DSB5 эффективность",
+   "front": "Lazy vs eager",
+   "back": "**Когда выполнить — сейчас или потом?**\n\n```\n# EAGER — выполняется сразу:\n[x*2 for x in range(1000000)]\n# миллион чисел в памяти\n\n# LAZY — по запросу:\nmap(lambda x: x*2, range(1000000))\n# ничего не посчитано до итерации\n```\n\nLazy экономит память. Но в timeit нужен `list(...)` иначе ничего не делает.",
+   "tags": [
+    "python",
+    "lazy"
+   ]
+  },
+  {
+   "id": "d5006",
+   "deck": "05 DSB5 эффективность",
+   "front": "Что такое generator (yield)?",
+   "back": "**Функция отдающая значения ПО ОДНОМУ через `yield`.**\n\n```\ndef get_one():\n    yield 1\n    yield 2\n    yield 3\n```\n\n**Мнемоника:** ел драники (yield → \"ел\", по одной за раз).\n\n`return` — всё сразу. `yield` — одно и заснул.",
+   "tags": [
+    "python",
+    "generator",
+    "personal"
+   ]
+  },
+  {
+   "id": "d5007",
+   "deck": "05 DSB5 эффективность",
+   "front": "Generator vs ordinary — экономия",
+   "back": "**В сотни раз меньше памяти + иногда быстрее.**\n\nЗамер на файле 678 MB:\n```\nordinary:   2058 MB   3.84 сек\ngenerator:    10 MB   1.96 сек\n             ↑\n        в 200× меньше\n```\n\nБыстрее: меньше нагрузки на кэш CPU.",
+   "tags": [
+    "python",
+    "generator"
+   ]
+  },
+  {
+   "id": "d5008",
+   "deck": "05 DSB5 эффективность",
+   "front": "Closure в lambda",
+   "back": "**Lambda \"помнит\" переменные снаружи.**\n\n```\nemails = [...]\nfunc = lambda: filter(emails)\n      ↑                ↑\n без аргументов   но emails известен!\n```\n\nГде встречается: `timeit(lambda: f(data))` — timeit вызывает без аргументов, но lambda тянет `data` снаружи.",
+   "tags": [
+    "python",
+    "closure"
+   ]
+  },
+  {
+   "id": "d5009",
+   "deck": "05 DSB5 эффективность",
+   "front": "Counter",
+   "back": "**Подсчёт частот в одну строку.**\n\n```\nfrom collections import Counter\nCounter('mississippi')\n# Counter({'i': 4, 's': 4, 'p': 2, 'm': 1})\n```\n\nЗамена ручному словарю с if/else. Под капотом на C — быстрее.",
+   "tags": [
+    "python",
+    "counter",
+    "collections"
+   ]
+  },
+  {
+   "id": "d5010",
+   "deck": "05 DSB5 эффективность",
+   "front": "`Counter.most_common(N)`",
+   "back": "**Топ-N самых частых.**\n\n```\nc = Counter('mississippi')\nc.most_common(2)\n# [('i', 4), ('s', 4)]\n```\n\nВернёт список пар (значение, частота), отсортированных по убыванию.",
+   "tags": [
+    "python",
+    "counter"
+   ]
+  },
+  {
+   "id": "d5011",
+   "deck": "05 DSB5 эффективность",
+   "front": "sys.argv",
+   "back": "**Список аргументов командной строки.**\n\n```\n# Запуск: python3 script.py file.csv 100\nsys.argv\n# ['script.py', 'file.csv', '100']\n#      [0]         [1]      [2]\n```\n\n**ВСЕ — строки!** Числа конвертируй: `int(sys.argv[2])`.",
+   "tags": [
+    "python",
+    "sys",
+    "cli"
+   ]
+  },
+  {
+   "id": "d5012",
+   "deck": "05 DSB5 эффективность",
+   "front": "Dict как dispatcher",
+   "back": "**Словарь функций вместо if/elif.**\n\n```\n# Вместо:\nif name == 'loop': run_loop()\nelif name == 'map': run_map()\n\n# Так:\nfunctions = {\n    'loop': run_loop,\n    'map':  run_map,\n}\nfunctions[name]()\n```\n\nАналогия: раздевалка с номерками — номерок (ключ) → куртка (функция).",
+   "tags": [
+    "python",
+    "dict",
+    "dispatcher"
+   ]
+  },
+  {
+   "id": "d6000",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Класс и объект — основы",
+   "back": "**Класс = шаблон. Объект = конкретный экземпляр.**\n\n```\nclass Person:\n    pass\n\nalice = Person()   ← объект 1\nbob = Person()     ← объект 2\n```\n\nКласс один, объектов много. Группирует данные и функции вместе.",
+   "tags": [
+    "oop",
+    "class",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "d6001",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Класс vs объект — аналогия",
+   "back": "**Класс = чертёж дома. Объект = построенный дом.**\n\n```\nclass House:        ← чертёж\n    pass\n\nh1 = House()        ← дом 1\nh2 = House()        ← дом 2\n```\n\nЧертёж один. Домов много. Каждый сам по себе, но устроены одинаково.",
+   "tags": [
+    "oop",
+    "class",
+    "personal"
+   ]
+  },
+  {
+   "id": "d6002",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`__init__` в классе",
+   "back": "**Функция-заполнитель** при создании объекта.\n\n```\nclass Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\np = Person('Tim', 30)   ← __init__ вызывается автоматически\n```\n\nАналогия: сотрудник МФЦ заполняет пустой бланк.",
+   "tags": [
+    "oop",
+    "init"
+   ]
+  },
+  {
+   "id": "d6003",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`self` в методах",
+   "back": "**Указатель на ЭТОТ объект.**\n\n```\nclass Dog:\n    def __init__(self, name):\n        self.name = name\n    def bark(self):\n        print(f'{self.name}: woof')\n\nalice = Dog('Alice')\nalice.bark()   # 'Alice: woof'\n```\n\nPython подставляет автоматически: `alice.bark()` → `Dog.bark(alice)`.",
+   "tags": [
+    "oop",
+    "self"
+   ]
+  },
+  {
+   "id": "d6004",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`obj.method` vs `obj.method()`",
+   "back": "**Со скобками — вызов. Без — ссылка.**\n\n```\nd = Dog()\nd.bark()    # вызов → 'woof'\nd.bark      # ссылка <method>\n```\n\nЗачем ссылка: передать функцию куда-то:\n```\nbutton.on_click(d.bark)   ← ссылка\nbutton.on_click(d.bark()) ← ОШИБКА (уже вызван)\n```",
+   "tags": [
+    "oop",
+    "method"
+   ]
+  },
+  {
+   "id": "d6005",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Метод-действие vs метод-расчёт",
+   "back": "```\n# ДЕЙСТВИЕ — меняет объект, без return\ndef add(self, item):\n    self.items.append(item)\n\n# РАСЧЁТ — возвращает результат\ndef total(self):\n    return sum(...)\n```\n\n**Правило:** один метод либо меняет, либо возвращает. Не оба сразу.",
+   "tags": [
+    "oop",
+    "method"
+   ]
+  },
+  {
+   "id": "d6006",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`@classmethod`",
+   "back": "**Метод КЛАССА, не объекта.** Получает `cls` (сам класс).\n\n```\nclass Movies:\n    @classmethod\n    def default(cls):\n        return cls('default.csv')\n\nMovies.default()   ← вызов через класс!\n```\n\n• `self` → конкретный объект\n• `cls` → сам класс\n\nЗачем: factory pattern (альтернативный способ создать объект).",
+   "tags": [
+    "oop",
+    "classmethod"
+   ]
+  },
+  {
+   "id": "d6007",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`@staticmethod`",
+   "back": "**Функция в namespace класса** — без self, без cls.\n\n```\nclass MathTools:\n    @staticmethod\n    def is_prime(n):\n        return n > 1 and ...\n\nMathTools.is_prime(7)   ← через класс\n```\n\nЗачем: связанные утилиты вместе. Альтернатива — обычная функция в модуле.",
+   "tags": [
+    "oop",
+    "staticmethod"
+   ]
+  },
+  {
+   "id": "d6008",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Factory pattern",
+   "back": "**Метод который создаёт готовый объект.**\n\n```\nclass Movies:\n    @classmethod\n    def default(cls):\n        return cls('default.csv', limit=1000)\n```\n\n```\nMovies('default.csv', 1000)   ← знать параметры\nMovies.default()              ← коротко!\n```\n\nЗачем: скрыть сложность + дать дефолты.",
+   "tags": [
+    "oop",
+    "pattern",
+    "factory"
+   ]
+  },
+  {
+   "id": "d6009",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "PyTest — как находит тесты",
+   "back": "**По именам.**\n\n```\nФайл:    test_*.py или *_test.py\nКласс:   class Test*\nМетод:   def test_*\n```\n\nЗапуск: `pytest` в директории.",
+   "tags": [
+    "python",
+    "testing"
+   ]
+  },
+  {
+   "id": "d6010",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`isinstance(x, type)` — зачем?",
+   "back": "**Правильный способ проверки типа.**\n\n```\nisinstance(5, int)    # True ← правильно\ntype(5) == int        # True ← опасно!\n```\n\nС наследованием:\n```\nclass MyInt(int): pass\nx = MyInt(5)\n\ntype(x) == int        # False! (MyInt не int)\nisinstance(x, int)    # True (учитывает наследование)\n```",
+   "tags": [
+    "python",
+    "isinstance"
+   ]
+  },
+  {
+   "id": "d6011",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Конвенция: 1 тест = 1 аспект",
+   "back": "**Аспект** = одна конкретная проверяемая вещь.\n\n```\n# ПЛОХО — 3 аспекта в одном:\ndef test_method():\n    assert isinstance(result, dict)\n    assert 'key' in result\n    assert result['key'] == 5\n\n# Упал — какой именно? Непонятно.\n```\n\n```\n# ХОРОШО — 3 отдельных:\ntest_returns_dict()\ntest_has_key()\ntest_value_correct()\n\n# Имя теста сразу говорит ЧТО сломалось.\n```",
+   "tags": [
+    "testing"
+   ]
+  },
+  {
+   "id": "d6012",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "csv.DictReader vs split",
+   "back": "**split(',') ломается на запятых внутри полей.**\n\n```\n'1,\"Usual Suspects, The\",1995'\n           ↑ запятая в названии!\n\nsplit(','): ['1', '\"Usual Suspects', ' The\"', '1995']\n                   ↑↑↑ разорвал название!\n\ncsv.DictReader: понимает кавычки, отдаёт dict.\n```\n\nДля CSV всегда csv.DictReader или pandas.read_csv.",
+   "tags": [
+    "python",
+    "csv"
+   ]
+  },
+  {
+   "id": "d6013",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "DATA_DIR через os.path",
+   "back": "**Путь относительно скрипта** (не текущей папки).\n\n```\nDATA_DIR = os.path.join(\n    os.path.dirname(os.path.abspath(__file__)),\n    '..', 'datasets'\n)\n```\n\nЛогика:\n```\n__file__   → путь скрипта\ndirname    → его папка\n'..'       → на уровень выше\n'datasets' → нужная папка\n```\n\nРаботает откуда бы ни запустили.",
+   "tags": [
+    "python",
+    "os",
+    "paths"
+   ]
+  },
+  {
+   "id": "d6014",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Что такое dunder?",
+   "back": "**Системные атрибуты Python** с `__` с обеих сторон.\n\n```\n__init__       # конструктор\n__name__       # имя класса/модуля\n__file__       # путь к файлу\n__str__        # строковое представление\n```\n\n**Произношение:** dunder = double underscore.\n\nPython вызывает их сам. Ты их **определяешь**, не вызываешь напрямую.",
+   "tags": [
+    "python",
+    "dunder"
+   ]
+  },
+  {
+   "id": "d6015",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Magic команды Jupyter (% и %%)",
+   "back": "**Команды Jupyter, не Python.**\n\n```\n%timeit sum(range(100))    # замер строки\n%%timeit                    # замер ячейки\n%reset                      # очистить переменные\n```\n\n• `%` — одна строка\n• `%%` — вся ячейка\n\nВ обычном .py файле **не работают**.",
+   "tags": [
+    "jupyter",
+    "magic"
+   ]
+  },
+  {
+   "id": "d6016",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`ipykernel`",
+   "back": "**Мост между venv и Jupyter.**\n\n```\nБез ipykernel:\n  Jupyter → системный Python → не видит твой venv → ImportError\n\nС ipykernel:\n  Jupyter → видит venv как kernel → работает\n```\n\nУстановка: `pip install ipykernel` в venv. В Jupyter справа сверху — выбрать kernel.",
+   "tags": [
+    "jupyter",
+    "kernel"
+   ]
+  },
+  {
+   "id": "d6017",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "Markdown vs Code ячейки",
+   "back": "```\nMarkdown:                Code:\n# Заголовок              import pandas\n**жирный текст**         df = pd.read_csv(...)\n                         df.head()\n```\n\nГорячие клавиши (Esc → command mode):\n• `M` → markdown\n• `Y` → code\n• `Shift+Enter` → выполнить",
+   "tags": [
+    "jupyter",
+    "cells"
+   ]
+  },
+  {
+   "id": "d6018",
+   "deck": "06 DSB6 OOP+Jupyter",
+   "front": "`# region` / `# endregion`",
+   "back": "**VSCode-блоки для сворачивания кода.**\n\n```\n# region Тесты для Movies\ndef test_count(): ...\ndef test_dist():  ...\n# endregion\n```\n\nПоявляется треугольник слева — можно свернуть. Только VSCode (Python это игнорирует).",
+   "tags": [
+    "vscode"
+   ]
+  },
+  {
+   "id": "d7000",
+   "deck": "07 DSB7 Pandas",
+   "front": "Что такое DataFrame?",
+   "back": "**Excel-таблица в памяти Python.**\n\n```\n        name  | age | salary\nrow 0   Alice | 30  | 50000\nrow 1   Bob   | 25  | 60000\n```\n\n3 компонента:\n• **Колонки** — данные\n• **Индекс** — \"адресная строка\"\n• **Значения** — содержимое\n\nДоступ:\n```\ndf['name']    # колонка\ndf.iloc[0]    # строка по позиции\ndf.loc[0]     # строка по индексу\n```",
+   "tags": [
+    "pandas",
+    "dataframe",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "d7001",
+   "deck": "07 DSB7 Pandas",
+   "front": "DataFrame — структура",
+   "back": "```\n        колонки →\n        ┌────┬────┐\nиндекс↓ │ A  │ B  │\n        ├────┼────┤\n   1    │ x  │... │\n   2    │ y  │... │\n        └────┴────┘\n```\n\n```\ndf.shape       # (строки, колонки)\ndf.columns     # имена колонок\ndf.index       # значения индекса\ndf.dtypes      # типы\n```",
+   "tags": [
+    "pandas",
+    "dataframe"
+   ]
+  },
+  {
+   "id": "d7002",
+   "deck": "07 DSB7 Pandas",
+   "front": "Series vs DataFrame",
+   "back": "**Series — 1D (одна колонка). DataFrame — 2D (много).**\n\n```\nSeries:        DataFrame:\n0  Alice      ┌──────┬─────┐\n1  Bob        │ name │ age │\n2  Carol      ├──────┼─────┤\n              │Alice │ 30  │\n              │Bob   │ 25  │\n              └──────┴─────┘\n```\n\nКаждая колонка DataFrame — это Series.\n```\ndf['name']         # Series\ndf[['name','age']]  # DataFrame (две колонки)\n```",
+   "tags": [
+    "pandas",
+    "series"
+   ]
+  },
+  {
+   "id": "d7003",
+   "deck": "07 DSB7 Pandas",
+   "front": "Почему Pandas быстрее Python?",
+   "back": "**Операции уходят в C-код.**\n\n```\n# Python — медленно:\nfor x in numbers: result.append(x*2)\n\n# Pandas — быстро:\ndf['col'] * 2\n```\n\nНа миллионе строк:\n```\nPython loop:  ~500 мс\nList comp:    ~300 мс\nPandas:         ~5 мс   ← 100× быстрее\n```\n\nЕсли не помнишь что такое C-код — см. карточку \"Что такое C-код?\".",
+   "tags": [
+    "pandas",
+    "performance"
+   ]
+  },
+  {
+   "id": "d7004",
+   "deck": "07 DSB7 Pandas",
+   "front": "`sep='\\t'` в read_csv",
+   "back": "**Разделитель колонок в файле.**\n\n```\nsep=','   CSV (default)\nsep='\\t'  TSV — табуляция\nsep=';'   Excel из РФ/Германии\nsep='|'   pipe-separated\n```\n\nЕсли не угадал sep — pandas прочитает в одну колонку. Проверь файл глазами!",
+   "tags": [
+    "pandas",
+    "read_csv"
+   ]
+  },
+  {
+   "id": "d7005",
+   "deck": "07 DSB7 Pandas",
+   "front": "`header=None`",
+   "back": "**Первая строка — НЕ заголовок, а данные.**\n\n```\n# Файл без шапки:\n2020-01-01,artem\n2020-01-02,oksana\n\n# Без header=None: первая строка стала именами колонок!\n# С header=None: первая строка осталась данными, колонки 0,1\n```\n\nКолонки получат имена 0, 1, 2... если ты не дал.",
+   "tags": [
+    "pandas",
+    "read_csv"
+   ]
+  },
+  {
+   "id": "d7006",
+   "deck": "07 DSB7 Pandas",
+   "front": "`names=['col1', 'col2']`",
+   "back": "**Имена колонок вручную.**\n\n```\npd.read_csv(\n    'file.csv',\n    header=None,\n    names=['datetime', 'user']\n)\n```\n\nИспользуется с `header=None` — задаём имена когда файл их не содержит.",
+   "tags": [
+    "pandas",
+    "read_csv"
+   ]
+  },
+  {
+   "id": "d7007",
+   "deck": "07 DSB7 Pandas",
+   "front": "`skiprows=[2, 3]`",
+   "back": "**Пропустить строки с указанными номерами при чтении.**\n\n```\nФайл строки: 0, 1, 2, 3, 4\nskiprows=[2, 3]\n→ читаем 0, 1, 4 (пропустили 2, 3)\n```\n\n• `skiprows=[2, 3]` — конкретные номера\n• `skiprows=2` — первые 2 строки\n\nИндексы пересчитаются с 0.",
+   "tags": [
+    "pandas",
+    "read_csv"
+   ]
+  },
+  {
+   "id": "d7008",
+   "deck": "07 DSB7 Pandas",
+   "front": "`skipfooter=2` — gotcha",
+   "back": "**Пропустить N последних строк.**\n\n```\nskipfooter=2          ← ValueError или warning!\nskipfooter=2,\nengine='python'       ← теперь работает\n```\n\nC-движок (default) не поддерживает skipfooter. Нужен python-движок.",
+   "tags": [
+    "pandas",
+    "gotcha"
+   ]
+  },
+  {
+   "id": "d7009",
+   "deck": "07 DSB7 Pandas",
+   "front": "`engine='python'`",
+   "back": "**Гибкий парсер для read_csv.**\n\n```\nengine='c'       ← default, быстрый, ограниченный\nengine='python'  ← медленнее, но больше функций (skipfooter)\n```\n\n*Practicality beats purity.* Теряем скорость ради функциональности.",
+   "tags": [
+    "pandas",
+    "engine"
+   ]
+  },
+  {
+   "id": "d7010",
+   "deck": "07 DSB7 Pandas",
+   "front": "`index_col='col'`",
+   "back": "**Делает указанную колонку индексом DataFrame.**\n\n```\n# Без index_col:\nИндекс: 0, 1 (автомат)\nКолонки: id, name, age (3)\n\n# С index_col='id':\nИндекс: значения id\nКолонки: name, age (2!)  ← id не колонка\n```\n\nПолезно для доступа `df.loc[id]`.",
+   "tags": [
+    "pandas",
+    "index"
+   ]
+  },
+  {
+   "id": "d7011",
+   "deck": "07 DSB7 Pandas",
+   "front": "`df.head()` / `df.tail()` / `df.sample()`",
+   "back": "```\ndf.head()       # первые 5\ndf.head(10)     # первые 10\ndf.tail()       # последние 5\ndf.sample(3)    # 3 случайных\n```\n\n**После каждой операции** вызывай head — проверка что произошло. Главная защита от pandas-gotcha.\n\n**Подвох:** `head(-5)` = все КРОМЕ последних 5.",
+   "tags": [
+    "pandas",
+    "inspect"
+   ]
+  },
+  {
+   "id": "d7012",
+   "deck": "07 DSB7 Pandas",
+   "front": "`df.shape`",
+   "back": "**Кортеж (строки, колонки). Индекс НЕ считается.**\n\n```\ndf.shape   # (1072, 1)\n#           ↑     ↑\n#       строки  колонки\n```\n\n```\ndf.shape[0]   # число строк\ndf.shape[1]   # число колонок\nlen(df)       # = shape[0]\n```",
+   "tags": [
+    "pandas",
+    "shape",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7013",
+   "deck": "07 DSB7 Pandas",
+   "front": "Индекс vs колонка",
+   "back": "**Разные сущности.**\n\n```\nКолонки — данные.    Индекс — \"адресная строка\".\n\ndf.columns           df.index\ndf['name']           df.loc[id]\ndf.rename(columns=)  df.index.name = ...\n```\n\nGotcha: `rename(columns=)` на индексе **тихо не сработает**.",
+   "tags": [
+    "pandas",
+    "index"
+   ]
+  },
+  {
+   "id": "d7014",
+   "deck": "07 DSB7 Pandas",
+   "front": "Переименовать индекс",
+   "back": "```\n# Способ 1:\ndf.index.name = 'new_name'\n\n# Способ 2:\ndf = df.rename_axis('new_name')\n\n# ❌ НЕ работает:\ndf.rename(columns={'old':'new'})\n# Тихо игнорируется — индекс не колонка\n```",
+   "tags": [
+    "pandas",
+    "index",
+    "rename"
+   ]
+  },
+  {
+   "id": "d7015",
+   "deck": "07 DSB7 Pandas",
+   "front": "`to_csv` параметры",
+   "back": "```\ndf.to_csv('out.csv')                # default\ndf.to_csv('out.csv', sep=';')        # ; разделитель\ndf.to_csv('out.csv', index=False)    # без индекса\ndf.to_csv('out.csv', header=False)   # без заголовка\n```\n\n**Default** — пишет и заголовок, и индекс.",
+   "tags": [
+    "pandas",
+    "to_csv"
+   ]
+  },
+  {
+   "id": "d7016",
+   "deck": "07 DSB7 Pandas",
+   "front": "`to_json(orient='records')`",
+   "back": "**Сохранение в JSON.**\n\n```\ndf.to_json('out.json', orient='records')\n# [{\"name\":\"Alice\",\"age\":30},{...}]\n```\n\nОrientations:\n• `records` — массив объектов (популярно)\n• `index` — {idx: {col: val}}\n• `values` — только значения\n\nДля красивого: `indent=2`.",
+   "tags": [
+    "pandas",
+    "to_json"
+   ]
+  },
+  {
+   "id": "d7017",
+   "deck": "07 DSB7 Pandas",
+   "front": "Vectorized vs iterative",
+   "back": "**Pandas — операция на ВСЮ колонку, не построчно.**\n\n```\n# ❌ Итеративно (медленно):\nfor i in range(len(df)):\n    df.iloc[i, 0] = df.iloc[i, 0] * 2\n\n# ✅ Векторно (правильно):\ndf['col'] = df['col'] * 2\n```\n\nЕсли в pandas пишешь `for` — почти всегда делаешь неправильно.",
+   "tags": [
+    "pandas",
+    "paradigm"
+   ]
+  },
+  {
+   "id": "d7018",
+   "deck": "07 DSB7 Pandas",
+   "front": "Pandas-defaults опасны",
+   "back": "**Pandas УГАДЫВАЕТ что у тебя в файле.**\n\nКаждый параметр read_csv = отключение default'a:\n```\nsep='\\t'      ← вместо ','\nheader=None   ← вместо \"первая строка — заголовок\"\nnames=[...]   ← задать имена\n```\n\nMantra: \"Explicit is better than implicit\".\n\nПеред чтением — посмотри 3 строки файла глазами.",
+   "tags": [
+    "pandas",
+    "principles"
+   ]
+  },
+  {
+   "id": "d7019",
+   "deck": "07 DSB7 Pandas",
+   "front": "Откуда название Pandas?",
+   "back": "**От \"panel data\"** в эконометрике.\n\nPanel data = наблюдения за одними объектами в разные периоды.\n\n```\nApple    2020  100\nApple    2021  120\nGoogle   2020   80\n```\n\nНе от животного. Логотип — маркетинг.",
+   "tags": [
+    "pandas",
+    "history"
+   ]
+  },
+  {
+   "id": "d7020",
+   "deck": "07 DSB7 Pandas",
+   "front": "`df.count()` vs `df.shape[0]`",
+   "back": "**Считают разное.**\n\n```\nDataFrame с NaN:\n  Alice  | 30\n  Bob    | NaN\n  Carol  | 35\n\ndf.shape[0]   # 3   (все строки)\ndf.count()    # name: 3, age: 2   (не-NaN)\n```\n\n**Назначение count()** — диагностика пропусков.",
+   "tags": [
+    "pandas",
+    "count",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7021",
+   "deck": "07 DSB7 Pandas",
+   "front": "`df.count()` vs `df['col'].count()`",
+   "back": "**Зависит на чём вызвал.**\n\n```\n# DataFrame-метод → Series по колонкам:\ndf.count()\n# name    1076\n# age     1070\n\n# Series-метод → одно число:\ndf['name'].count()\n# 1076\n```",
+   "tags": [
+    "pandas",
+    "count",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7022",
+   "deck": "07 DSB7 Pandas",
+   "front": "`value_counts()`",
+   "back": "**Распределение значений в колонке.**\n\n```\ndf['city'].value_counts()\n# Moscow    3\n# SPb       2\n# Kazan     1\n```\n\nВозвращает Series: значение → частота. Отсортировано по убыванию.\n\nАналог `Counter.most_common()` из DSB5.",
+   "tags": [
+    "pandas",
+    "value_counts",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7023",
+   "deck": "07 DSB7 Pandas",
+   "front": "count vs value_counts",
+   "back": "**Считают разное!**\n\n```\ncolumn: ['Moscow', 'SPb', 'Moscow', NaN, 'Moscow']\n\ndf['col'].count()       # 4   (не-NaN)\ndf['col'].value_counts()# Moscow:3, SPb:1 (распределение)\n```\n\n• `count` — \"сколько данных у меня\" (диагностика)\n• `value_counts` — \"что в этих данных\" (распределение)",
+   "tags": [
+    "pandas",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7024",
+   "deck": "07 DSB7 Pandas",
+   "front": "`drop_duplicates()`",
+   "back": "**Удаление повторяющихся строк.**\n\n```\ndf = df.drop_duplicates(\n    subset=['CarNumber', 'Make'],\n    keep='last'\n)\n```\n\n• `subset` — по каким колонкам считать дубль\n• `keep` — 'first' (default), 'last', False (удалить все)\n\n**КРИТИЧНО:** не забыть `df = ...` иначе тихо не сработает!",
+   "tags": [
+    "pandas",
+    "cleaning",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7025",
+   "deck": "07 DSB7 Pandas",
+   "front": "NaN — что это?",
+   "back": "**Not a Number — обозначение пропуска в pandas.**\n\nОткуда:\n• Пустое поле в форме\n• Сломанный датчик\n• Объединение таблиц без пары\n\n```\nname   age   salary\nAlice  30    50000\nBob    NaN   60000   ← пропуск\n```\n\nПроверка: `pd.isna(x)` или `df.isna()`.",
+   "tags": [
+    "pandas",
+    "nan",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "d7026",
+   "deck": "07 DSB7 Pandas",
+   "front": "`isna().sum()` — подсчёт пропусков",
+   "back": "**Сколько NaN в каждой колонке.**\n\n```\ndf.isna()\n# Series True/False по каждой ячейке\n\ndf.isna().sum()\n# name    0\n# age     1   ← один NaN\n```\n\nTrue = 1, False = 0. Сумма True = число NaN.\n\nСтандартный первый шаг после read_csv.",
+   "tags": [
+    "pandas",
+    "nan",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7027",
+   "deck": "07 DSB7 Pandas",
+   "front": "`dropna(thresh, axis)`",
+   "back": "**Thresh смотрит на ВАЛИДНЫЕ значения!** (Инвертированная логика)\n\n```\ndf.dropna(thresh=500, axis=1)\n# Оставить колонки где ≥500 не-NaN\n# (= удалить где <500 валидных)\n```\n\n• `axis=0` → строки\n• `axis=1` → колонки\n\nМнемоника осей: дробь — 0 числитель, 1 знаменатель.",
+   "tags": [
+    "pandas",
+    "cleaning",
+    "priority"
+   ],
+   "img": "img/dropna.svg"
+  },
+  {
+   "id": "d7028",
+   "deck": "07 DSB7 Pandas",
+   "front": "`fillna` и `ffill`",
+   "back": "**Заполнение пропусков.**\n\n```\n# Значением:\ndf['col'] = df['col'].fillna(0)\ndf['col'] = df['col'].fillna(df['col'].mean())\n\n# Forward fill — взять сверху:\ndf['col'] = df['col'].ffill()\n```\n\n⚠️ Старый синтаксис `fillna(method='ffill')` **удалён в pandas 2.2+**. Только `ffill()` напрямую.",
+   "tags": [
+    "pandas",
+    "cleaning",
+    "priority"
+   ],
+   "img": "img/fillna.svg"
+  },
+  {
+   "id": "d7029",
+   "deck": "07 DSB7 Pandas",
+   "front": "Boolean filtering",
+   "back": "**Отбор строк по условию. 2 шага.**\n\n```\n# Маска (T/F по строкам):\nmask = df['age'] > 25\n\n# Применить:\ndf[mask]\n\n# В одну строку:\ndf[df['age'] > 25]\n```\n\nСоставное условие:\n```\ndf[(df['age'] > 25) & (df['city'] == 'Moscow')]\n   ↑                ↑                        ↑\n  скобки           AND                    скобки\n```\n\nСкобки **обязательны!**\n\n`&` AND, `|` OR, `~` NOT.",
+   "tags": [
+    "pandas",
+    "filter",
+    "fundamental",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7030",
+   "deck": "07 DSB7 Pandas",
+   "front": "`.dt` акcессор",
+   "back": "**Доступ к date-методам** (только на datetime64).\n\n```\ndf['date'] = pd.to_datetime(df['date'])\n\ndf['date'].dt.year        # 2020\ndf['date'].dt.month       # 4\ndf['date'].dt.day_name()  # 'Friday' (метод!)\n```\n\nСемейство акcессоров:\n• `.dt` — datetime\n• `.str` — строки\n• `.cat` — категории",
+   "tags": [
+    "pandas",
+    "datetime",
+    "accessor"
+   ]
+  },
+  {
+   "id": "d7031",
+   "deck": "07 DSB7 Pandas",
+   "front": "`pd.cut()` — категоризация",
+   "back": "**Превращает числа в категории по интервалам.**\n\n```\npd.cut(\n    hours,\n    bins=[-1, 3, 11, 17, 23],\n    labels=['night', 'morning', 'day', 'evening']\n)\n```\n\nN меток → нужно **N+1** границ.\n\nАналогия: оценки в школе.\n```\nБаллы [0, 60, 70, 80, 90, 100]\nОценки   F   D   C   B   A    ← 5 меток, 6 границ\n```",
+   "tags": [
+    "pandas",
+    "cut",
+    "category"
+   ]
+  },
+  {
+   "id": "d7032",
+   "deck": "07 DSB7 Pandas",
+   "front": "`apply()` — мост в Python",
+   "back": "**Применяет функцию к каждому элементу.**\n\n```\n# На Series — каждому значению:\ndf['col'].apply(lambda x: x * 2)\n\n# На DataFrame с axis=1 — каждой строке:\ndf.apply(lambda row: row['a'] + row['b'], axis=1)\n```\n\nКогда нужен apply: нет готовой векторной операции.\n\n⚠️ apply медленнее настоящих векторных. Если есть встроенный pandas-метод — используй его.",
+   "tags": [
+    "pandas",
+    "apply"
+   ],
+   "img": "img/apply.svg"
+  },
+  {
+   "id": "d7033",
+   "deck": "07 DSB7 Pandas",
+   "front": "`str.split(' ', n=1, expand=True)`",
+   "back": "**Разделение колонки на несколько новых.**\n\n```\ndf[['first', 'last']] = df['name'].str.split(' ', n=1, expand=True)\n```\n\n```\n'Alice Smith'  → first='Alice', last='Smith'\n'Carol'        → first='Carol', last=None   ← graceful!\n```\n\n• `n=1` — максимум одно разделение\n• `expand=True` — DataFrame, не Series списков",
+   "tags": [
+    "pandas",
+    "str",
+    "split"
+   ]
+  },
+  {
+   "id": "d7034",
+   "deck": "07 DSB7 Pandas",
+   "front": "Pandas-gotcha №1: без присваивания",
+   "back": "**Большинство методов возвращают НОВЫЙ DataFrame.**\n\n```\n# ❌ НЕ работает:\ndf.drop_duplicates()\n# вернул новый и забыл\n# df без изменений\n\n# ✅ Правильно:\ndf = df.drop_duplicates()\n```\n\nКоснётся: drop_duplicates, dropna, fillna, rename, set_index, sort_values...\n\n**Проверка:** после операции `df.shape` — не изменилось → забыл `=`.",
+   "tags": [
+    "pandas",
+    "gotcha",
+    "priority",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "d7035",
+   "deck": "07 DSB7 Pandas",
+   "front": "Pandas-gotcha №2: симметрия присваивания",
+   "back": "**Слева и справа должны быть одной формы.**\n\n```\n# ❌ Маленькое в большое — катастрофа:\nauto = auto['Refund'].fillna(0)\n# DataFrame ← Series — теряем DataFrame!\n\n# ✅ Симметрично:\nauto['Refund'] = auto['Refund'].fillna(0)\n# колонка ← колонка\n```\n\n**Мнемоника:** маленькое в маленькое, большое в большое.",
+   "tags": [
+    "pandas",
+    "gotcha",
+    "priority",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "a001",
+   "deck": "08 Pandas агрегации",
+   "front": "Что такое агрегация?",
+   "back": "**N значений → 1 значение.** Сжать колонку в одно число.\n\n```\n[1, 5, 3, 8, 2]\n       ↓\n   sum  → 19\n   mean → 3.8\n   min  → 1\n```\n\nЭто reduce из DSB5 (Ридикулус!), только pandas-API.",
+   "tags": [
+    "pandas",
+    "aggregation",
+    "fundamental"
+   ]
+  },
+  {
+   "id": "a002",
+   "deck": "08 Pandas агрегации",
+   "front": "`.sum()`",
+   "back": "**Сумма всех значений.**\n\n```\ndf['fines'].sum()   # 1234567\n```\n\nNaN игнорируется по умолчанию.\n\nПосле groupby — сумма в каждой группе:\n```\ndf.groupby('Make')['Fines'].sum()\n```",
+   "tags": [
+    "pandas",
+    "aggregation",
+    "sum"
+   ]
+  },
+  {
+   "id": "a003",
+   "deck": "08 Pandas агрегации",
+   "front": "`.mean()` vs `.median()`",
+   "back": "**Mean — среднее. Median — центральное.**\n\n```\nЗарплаты: [30, 40, 50, 60, 1000]\n                              ↑ выброс\n\nmean   = 236   ← искажено\nmedian =  50   ← устойчиво\n```\n\n**Когда что:**\n• mean — нормальные распределения\n• median — есть выбросы (зарплаты, цены)",
+   "tags": [
+    "pandas",
+    "mean",
+    "median"
+   ]
+  },
+  {
+   "id": "a004",
+   "deck": "08 Pandas агрегации",
+   "front": "`.min()` `.max()`",
+   "back": "**Минимум и максимум.**\n\n```\ndf['fines'].min()   # 100\ndf['fines'].max()   # 50000\n```\n\nНа строках — алфавитный порядок.\n\nЗачем:\n• Outliers (необычно высокие/низкие)\n• Range = max - min\n• Sanity check (нет ли отрицательных)",
+   "tags": [
+    "pandas",
+    "min",
+    "max"
+   ]
+  },
+  {
+   "id": "a005",
+   "deck": "08 Pandas агрегации",
+   "front": "`.count()` (как агрегация)",
+   "back": "**Сколько НЕ-NaN.**\n\n```\n[10, 20, NaN, 30, NaN]\ncount() → 3   (5 - 2 NaN)\n```\n\nНа DataFrame — Series по колонкам.\n\nПосле groupby — размер группы.\n\nNOT `len(df)`: len считает все, count только не-NaN.",
+   "tags": [
+    "pandas",
+    "count"
+   ]
+  },
+  {
+   "id": "a006",
+   "deck": "08 Pandas агрегации",
+   "front": "`.std()` — стандартное отклонение",
+   "back": "**Мера разброса вокруг среднего.**\n\n```\n[50, 50, 50, 50]      std = 0     ← одинаковые\n[40, 45, 55, 60]      std = 8.5   ← разные\n[10, 30, 70, 90]      std = 36.5  ← очень разные\n```\n\nЗачем:\n• Сравнить разброс групп\n• Outliers (>3 std от mean)\n• Надёжность среднего",
+   "tags": [
+    "pandas",
+    "std",
+    "statistics"
+   ]
+  },
+  {
+   "id": "a007",
+   "deck": "08 Pandas агрегации",
+   "front": "`.var()` — дисперсия",
+   "back": "**Квадрат стандартного отклонения.**\n\n```\nstd = 5    →   var = 25\nstd = 10   →   var = 100\n```\n\n• `std` — в тех же единицах (рубли)\n• `var` — в квадратных (рубли²)\n\nstd понятнее на практике. var — в теоретических формулах.",
+   "tags": [
+    "pandas",
+    "var"
+   ]
+  },
+  {
+   "id": "a008",
+   "deck": "08 Pandas агрегации",
+   "front": "`.first()` `.last()`",
+   "back": "**Первый/последний после groupby.**\n\n```\ndf.groupby('Make')['Model'].first()\n# Ford      Focus    ← первый Ford\n# Toyota    Camry\n```\n\nПорядок важен — зависит от порядка строк.\n\nПодвох: если не отсортировано — \"первый\" случайный. Сначала `sort_values()`.",
+   "tags": [
+    "pandas",
+    "first",
+    "last"
+   ]
+  },
+  {
+   "id": "a009",
+   "deck": "08 Pandas агрегации",
+   "front": "`.nunique()`",
+   "back": "**Сколько уникальных значений.**\n\n```\n['alex', 'bob', 'alex', 'carol']\ncount()    # 4\nnunique()  # 3   (alex, bob, carol)\n```\n\nЗачем:\n• Сколько разных клиентов?\n• Сколько городов в каждой стране?\n• Cardinality колонки\n\n`dropna=False` — включить NaN в подсчёт.",
+   "tags": [
+    "pandas",
+    "nunique"
+   ]
+  },
+  {
+   "id": "a010",
+   "deck": "08 Pandas агрегации",
+   "front": "`.agg([...])` — несколько сразу",
+   "back": "**Несколько агрегаций за один проход.**\n\n```\n# Отдельно — 3 команды:\ndf.groupby('Make')['Fines'].min()\ndf.groupby('Make')['Fines'].max()\ndf.groupby('Make')['Fines'].mean()\n\n# Через agg — одна:\ndf.groupby('Make')['Fines'].agg(['min','max','mean'])\n```\n\nРезультат — DataFrame с колонками min, max, mean.",
+   "tags": [
+    "pandas",
+    "agg",
+    "priority"
+   ]
+  },
+  {
+   "id": "a011",
+   "deck": "08 Pandas агрегации",
+   "front": "`groupby` — Split-Apply-Combine",
+   "back": "**3-этапный паттерн** — основа аналитики.\n\n```\nfines.groupby('Make')['Fines'].median()\n  1        2           3        4\n```\n\n1. DataFrame (широко)\n2. **Split** — разбить на группы (узко)\n3. **Apply** — функция к каждой\n4. **Combine** — собрать результаты\n\nАналогия — **песочные часы**.",
+   "tags": [
+    "pandas",
+    "groupby",
+    "fundamental",
+    "priority"
+   ],
+   "img": "img/groupby.svg"
+  },
+  {
+   "id": "m001",
+   "deck": "99 Личные мнемоники",
+   "front": "`reduce` → ???",
+   "back": "**Ридикулус!**\n\nЗаклинание Г.Поттера — превращает много в одно.\n\nReduce: [1,2,3,4] → 10",
+   "tags": [
+    "mnemonic",
+    "reduce"
+   ]
+  },
+  {
+   "id": "m002",
+   "deck": "99 Личные мнемоники",
+   "front": "`yield` → ???",
+   "back": "**\"ел драники\"**\n\nЗвук: yield → \"йил-д\" → \"ел\".\nФизика: драники едят по одному, не сразу всю тарелку.\n\nГенератор отдаёт по одному.",
+   "tags": [
+    "mnemonic",
+    "yield"
+   ]
+  },
+  {
+   "id": "m003",
+   "deck": "99 Личные мнемоники",
+   "front": "Класс → ???",
+   "back": "**Печатный станок** (шаблон).\nОбъект = напечатанный продукт.\n\nСтанок один — продуктов много.",
+   "tags": [
+    "mnemonic",
+    "class"
+   ]
+  },
+  {
+   "id": "m004",
+   "deck": "99 Личные мнемоники",
+   "front": "`dict[ключ]` → ???",
+   "back": "**Раздевалка с номерками.**\n\nНомерок (ключ) → куртка (значение).",
+   "tags": [
+    "mnemonic",
+    "dict"
+   ]
+  },
+  {
+   "id": "m005",
+   "deck": "99 Личные мнемоники",
+   "front": "Pandas → ???",
+   "back": "**Excel в памяти Python.**\n\nТолько мощнее, программируемее, миллионы строк.",
+   "tags": [
+    "mnemonic",
+    "pandas"
+   ]
+  },
+  {
+   "id": "m006",
+   "deck": "99 Личные мнемоники",
+   "front": "`map` vs `filter` → ???",
+   "back": "• `map` = **красильщик** (покрасил каждую)\n• `filter` = **браковщик** (выкинул брак)",
+   "tags": [
+    "mnemonic",
+    "map",
+    "filter"
+   ]
+  },
+  {
+   "id": "m007",
+   "deck": "99 Личные мнемоники",
+   "front": "`and` → ???",
+   "back": "**Три замка на двери.**\n\nВсе открыты → войдёшь. Один заперт → нет.",
+   "tags": [
+    "mnemonic",
+    "and"
+   ]
+  },
+  {
+   "id": "m008",
+   "deck": "99 Личные мнемоники",
+   "front": "generator vs ordinary → ???",
+   "back": "**Кастрюля vs тарелочка.**\n\nOrdinary = всю кастрюлю на стол (память на ГБ).\nGenerator = тарелочки по одной (память на КБ).",
+   "tags": [
+    "mnemonic",
+    "generator"
+   ]
+  },
+  {
+   "id": "m009",
+   "deck": "99 Личные мнемоники",
+   "front": "axis 0/1 → ???",
+   "back": "**Дробь.**\n\naxis=0 → числитель (сверху-снизу) — СТРОКИ\naxis=1 → знаменатель (влево-вправо) — КОЛОНКИ\n\nРаботает везде: sum, apply, drop, dropna.",
+   "tags": [
+    "mnemonic",
+    "axis"
+   ],
+   "img": "img/axis.svg"
+  },
+  {
+   "id": "m010",
+   "deck": "99 Личные мнемоники",
+   "front": "Симметрия присваивания → ???",
+   "back": "**Маленькое в маленькое, большое в большое.**\n\n```\ndf['col'] = df['col'] * 2   ← симметрично\ndf = df.dropna()             ← симметрично\n\ndf = df['col'].fillna(0)     ← НЕТ! теряем DF\n```",
+   "tags": [
+    "mnemonic",
+    "assignment",
+    "priority"
+   ]
+  },
+  {
+   "id": "m011",
+   "deck": "99 Личные мнемоники",
+   "front": "groupby → ???",
+   "back": "**Песочные часы.**\n\n```\n┌────┐   все данные (широко)\n└──┬─┘\n   ↓ split\n  ┴┴┴    группы по отдельности (узко)\n   ↓ apply\n┌────┐   результаты (широко)\n└────┘\n```\n\nSplit → Apply → Combine.",
+   "tags": [
+    "mnemonic",
+    "groupby",
+    "priority"
+   ],
+   "img": "img/groupby.svg"
+  },
+  {
+   "id": "d7036",
+   "deck": "07 DSB7 Pandas",
+   "front": "`pd.concat([a, b])` vs `pd.concat([a, b], axis=1)`",
+   "back": "**axis=0 (дефолт)** — стопкой ВНИЗ: строки складываются, таблица длиннее.\n**axis=1** — БОКОМ: колонки рядом, таблица шире.\n\nКлеит ПО ИНДЕКСУ → перед axis=1 часто нужен `reset_index(drop=True)`.",
+   "img": "img/concat.svg",
+   "tags": [
+    "pandas",
+    "concat",
+    "axis",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7037",
+   "deck": "07 DSB7 Pandas",
+   "front": "4 типа `merge`: inner / outer / left / right",
+   "back": "**inner** — только совпавшие ключи (пересечение).\n**outer** — все ключи, дыры → NaN (объединение).\n**left/right** — все строки одной стороны + пары.\n\nТвой ex04: 930 строк + owners → inner 439, outer 933, left 930, right 442.",
+   "img": "img/merge.svg",
+   "tags": [
+    "pandas",
+    "merge",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7038",
+   "deck": "07 DSB7 Pandas",
+   "front": "`pivot_table(index=, columns=, values=, aggfunc=)`",
+   "back": "**Сводная таблица**: длинная → двумерная.\n\n`index` — что в строках, `columns` — что в колонках, `values`+`aggfunc` — что в ячейках (sum/mean...).\n\nЭто groupby по двум ключам, развёрнутый в сетку.",
+   "img": "img/pivot.svg",
+   "tags": [
+    "pandas",
+    "pivot_table",
+    "groupby",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7039",
+   "deck": "07 DSB7 Pandas",
+   "front": "`np.random.seed(21)` — что делает 21?",
+   "back": "**Номер способа тасовки колоды**, не код.\n\nseed фиксирует стартовое состояние генератора: «случайность» становится повторяемой — у всех с seed(21) те же числа.\n\n`randint(1980, 2020)` → 1980..2019, правая граница НЕ входит.",
+   "tags": [
+    "numpy",
+    "seed",
+    "randint",
+    "priority"
+   ]
+  },
+  {
+   "id": "d7040",
+   "deck": "07 DSB7 Pandas",
+   "front": "`sample(n=200, random_state=21, replace=?)`",
+   "back": "**Лотерейный барабан**: вытащить n случайных строк.\n\n`random_state` — повторяемость выборки.\n`replace=True` — шарик ВОЗВРАЩАЕТСЯ (одна строка может выпасть дважды). Обязателен, если n больше размера данных — иначе ValueError (твой ex04!).",
+   "tags": [
+    "pandas",
+    "sample",
+    "priority"
+   ]
+  }
+ ]
 }

@@ -297,6 +297,27 @@
     const queue = buildStudyQueue(null);
     document.getElementById('study-all-count').textContent = queue.length;
 
+    // ближайшие повторы — делаем график SM-2 видимым
+    const upBox = document.getElementById('upcoming');
+    if (upBox) {
+      const now = Date.now();
+      const buckets = { today: 0, tomorrow: 0, week: 0, later: 0 };
+      DECK.forEach(c => {
+        const s = getCardState(c.id);
+        if (s.reps === 0) return; // новые не считаем
+        const days = Math.ceil((s.due - now) / DAY_MS);
+        if (days <= 0) buckets.today++;
+        else if (days === 1) buckets.tomorrow++;
+        else if (days <= 7) buckets.week++;
+        else buckets.later++;
+      });
+      upBox.innerHTML =
+        `<span>сегодня <b>${buckets.today}</b></span>` +
+        `<span>завтра <b>${buckets.tomorrow}</b></span>` +
+        `<span>за неделю <b>${buckets.week}</b></span>` +
+        `<span>позже <b>${buckets.later}</b></span>`;
+    }
+
     const list = document.getElementById('deck-list');
     list.innerHTML = '';
     const names = getDeckNames();
@@ -363,7 +384,8 @@
 
     document.getElementById('card-front-text').innerHTML = formatText(card.front);
     document.getElementById('card-front-text-back').innerHTML = formatText(card.front);
-    document.getElementById('card-back-text').innerHTML = formatText(card.back);
+    document.getElementById('card-back-text').innerHTML = formatText(card.back) +
+      (card.img ? `<img class="card-img" src="${card.img}" alt="схема">` : '');
 
     // tags
     const tagsEl = document.getElementById('card-tags');
@@ -410,9 +432,28 @@
     document.querySelector('.card-back').hidden = false;
   }
 
+  // тост "увидишь через X" — делает интервалы видимыми
+  let toastTimer = null;
+  function showToast(text) {
+    let el = document.getElementById('toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'toast';
+      document.body.appendChild(el);
+    }
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 1400);
+  }
+
   function rateCard(rating) {
     const cardId = studyQueue[currentCardIdx];
+    const predicted = predictInterval(cardId, rating);
     const result = applyRating(cardId, rating);
+    showToast(result.interval === 0
+      ? '🔁 вернётся в этой сессии'
+      : '⏱ увидишь через ' + predicted);
 
     // Если interval = 0 (Again ИЛИ Hard на новой) — карточка снова в очередь сессии.
     // Иначе — пошла в график на дни вперёд, считаем как изученную сегодня.
