@@ -1,7 +1,7 @@
 {
- "version": "2.0",
- "generated": "2026-06-08",
- "description": "v2.0 — компактные карточки под экран iPhone + фундаментальные концепты (C-код, namespace, kernel, аспект) + 11 агрегаций",
+ "version": "2.2",
+ "generated": "2026-06-25",
+ "description": "v2.1 — добавлены 9 карточек DSB8 SQL (ex00): sqlite3.connect, pd.io.sql.read_sql, SELECT-WHERE-LIKE-ORDER BY, PRAGMA, index_col+parse_dates, кавычки",
  "cards": [
   {
    "id": "p000",
@@ -1288,6 +1288,241 @@
    "tags": [
     "pandas",
     "sample",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8000",
+   "deck": "09 DSB8 SQL",
+   "front": "Как открыть и закрыть соединение с SQLite БД?",
+   "back": "```\nimport sqlite3\nconn = sqlite3.connect('путь/к/file.sqlite')\n...\nconn.close()\n```\n\n**Путь — строка**. Относительный (`'../data/db.sqlite'`) — от папки ноутбука.\n\n`.close()` — хороший тон: не оставляй открытых соединений.",
+   "tags": [
+    "sql",
+    "sqlite3",
+    "connection"
+   ]
+  },
+  {
+   "id": "s8001",
+   "deck": "09 DSB8 SQL",
+   "front": "Как выполнить SQL и получить DataFrame?",
+   "back": "```\npd.io.sql.read_sql(sql, conn)\n```\n\n**2 обязательных аргумента:**\n• `sql` — строка с запросом\n• `conn` — соединение (из `sqlite3.connect`)\n\nPandas отправит SQL в БД через `conn` и обернёт результат в DataFrame.\n\nКороткий псевдоним: `pd.read_sql(...)` — то же самое.",
+   "tags": [
+    "sql",
+    "pandas",
+    "read_sql"
+   ]
+  },
+  {
+   "id": "s8002",
+   "deck": "09 DSB8 SQL",
+   "front": "Что означают точки в `pd.io.sql.read_sql`?",
+   "back": "**Вложенность модулей** = подпапки.\n\n```\npd  .  io  .  sql  .  read_sql\nбиблиотека→раздел→подраздел→функция\n```\n\n• `pd` — библиотека pandas\n• `pd.io` — раздел input/output\n• `pd.io.sql` — подраздел про SQL\n• `read_sql` — сама функция",
+   "tags": [
+    "python",
+    "modules",
+    "import"
+   ]
+  },
+  {
+   "id": "s8003",
+   "deck": "09 DSB8 SQL",
+   "front": "Скелет SELECT-запроса — 5 слов и их порядок",
+   "back": "**Заказ в библиотеке:**\n\n```sql\nSELECT *                -- «дай мне всё»\nFROM pageviews          -- «вот эту полку»\nWHERE uid LIKE 'user_%' -- «только эти»\nORDER BY uid ASC        -- «по алфавиту»\nLIMIT 10                -- «первые 10»\n```\n\n**Порядок фиксирован** — менять нельзя. `LIMIT` всегда в конце (срезает после сортировки).",
+   "tags": [
+    "sql",
+    "select",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8004",
+   "deck": "09 DSB8 SQL",
+   "front": "`PRAGMA table_info(table)` — что вернёт?",
+   "back": "**Схему таблицы**, не данные. Это как открыть **оглавление** книги, а не страницы.\n\nВозвращает по 1 строке на каждую колонку:\n• `cid` — порядок\n• `name` — имя\n• `type` — тип данных\n• `notnull`, `dflt_value`, `pk` — флаги\n\nPRAGMA — SQLite-специфика. В PostgreSQL/MySQL по-другому.",
+   "tags": [
+    "sql",
+    "sqlite3",
+    "pragma",
+    "schema"
+   ]
+  },
+  {
+   "id": "s8005",
+   "deck": "09 DSB8 SQL",
+   "front": "`WHERE uid LIKE 'user_%'` — что значит `%`?",
+   "back": "`LIKE` = «похож на шаблон».\n\n**Спецсимволы шаблона:**\n• `%` — любое количество любых символов (как `*` в Bash)\n• `_` — ровно один любой символ\n\nПримеры:\n• `'я%'` → `яблоко`, `яма`\n• `'%код'` → `мой код`, `код`\n• `'user_%'` → `user_1`, `user_30`\n\nБез `%`/`_` работает как `=`.",
+   "tags": [
+    "sql",
+    "where",
+    "like",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8006",
+   "deck": "09 DSB8 SQL",
+   "front": "`ORDER BY col ASC` vs `DESC`",
+   "back": "**Сортировка:**\n• `ASC` — по возрастанию (по умолчанию, можно не писать)\n• `DESC` — по убыванию\n\n⚠️ **Подводный камень — строки сортируются по алфавиту:**\n```\nuser_1, user_10, user_100, user_11, ..., user_2, user_20\n```\nЕсли нужно численно — `ORDER BY CAST(SUBSTR(uid,6) AS INTEGER)`.",
+   "tags": [
+    "sql",
+    "order_by",
+    "sort"
+   ]
+  },
+  {
+   "id": "s8007",
+   "deck": "09 DSB8 SQL",
+   "front": "Как получить DatetimeIndex через `read_sql`?",
+   "back": "Два параметра нужны **одновременно**:\n\n```\npd.io.sql.read_sql(\n    sql, conn,\n    index_col='datetime',\n    parse_dates=['datetime']\n)\n```\n\n• `index_col='col'` — поставить колонку как индекс (строка)\n• `parse_dates=['col']` — распарсить как datetime (список!)\n\nОбе ссылаются на ту же колонку → получается **DatetimeIndex**.",
+   "tags": [
+    "pandas",
+    "read_sql",
+    "datetime",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8008",
+   "deck": "09 DSB8 SQL",
+   "front": "Кавычки в SQL: `'одинарные'` vs `\"двойные\"` vs без",
+   "back": "**Три разных смысла:**\n\n| Кавычки | Смысл | Пример |\n|---|---|---|\n| без кавычек | имя колонки/таблицы | `WHERE uid = ...` |\n| `'одинарные'` | строковое **значение** | `WHERE uid = 'user_1'` |\n| `\"двойные\"` | имя с пробелами | `\"my column\"` |\n\n⚠️ Если напишешь `SELECT 'uid' FROM ...` — БД вернёт **буквальную строку** `uid`, а не колонку.",
+   "tags": [
+    "sql",
+    "quotes",
+    "syntax",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8009",
+   "deck": "09 DSB8 SQL",
+   "front": "INNER JOIN vs LEFT JOIN — когда какой?",
+   "back": "**INNER** (просто `JOIN`) — только строки, у которых есть пара в обеих таблицах.\n**LEFT JOIN** — ВСЕ строки левой таблицы; нет пары справа → `NULL`.\n\n📌 Правило: **«кого нельзя терять — тот налево»**.\n\nex02: `checker` слева через LEFT, чтобы юзеры без ленты остались (→ `control` с NULL). INNER бы их выкинул.",
+   "tags": [
+    "sql",
+    "join",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8010",
+   "deck": "09 DSB8 SQL",
+   "front": "Алиас `AS c` и точка `c.uid` — что значат?",
+   "back": "`FROM checker AS c` = дать таблице прозвище `c`.\n`c.uid` = «колонка uid **ИЗ** таблицы c».\n\nТочка нужна, когда колонка есть **в обеих** таблицах (например `uid`) — иначе БД не знает, чьё поле берёшь (ambiguous).",
+   "tags": [
+    "sql",
+    "join",
+    "alias"
+   ]
+  },
+  {
+   "id": "s8011",
+   "deck": "09 DSB8 SQL",
+   "front": "В каком порядке SQL ВЫПОЛНЯЕТ запрос?",
+   "back": "Пишем: `SELECT … FROM … JOIN … WHERE … GROUP BY`.\nА **выполняет** в другом порядке:\n\n`FROM/JOIN` → `WHERE` → `GROUP BY` → `SELECT` → `ORDER BY`\n\n📌 **SELECT пишется первым, а выполняется почти последним.** Поэтому алиас из JOIN (`p`) можно использовать в SELECT, хоть он «ниже».",
+   "tags": [
+    "sql",
+    "order",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8012",
+   "deck": "09 DSB8 SQL",
+   "front": "GROUP BY + агрегат: что делает + правило SELECT",
+   "back": "`GROUP BY uid` — складывает строки в **кучки** по ключу. Агрегат (MIN/AVG/COUNT) даёт **одно число с кучки**.\n\n📌 Правило: каждая **не**-агрегатная колонка в SELECT обязана быть в `GROUP BY`. Иначе теряешь строки (GROUP BY uid вместо uid,labname → 29 строк вместо 140).",
+   "tags": [
+    "sql",
+    "groupby",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8013",
+   "deck": "09 DSB8 SQL",
+   "front": "Создать таблицу из запроса — чем и почему НЕ read_sql?",
+   "back": "`connect.execute(\"CREATE TABLE t AS SELECT …\")`\n\n⚠️ Не `pd.read_sql`! read_sql ждёт **строки на выходе**, а DDL (`CREATE`/`DROP`/`INSERT`) ничего не возвращает → DatabaseError. Для них — `execute`.",
+   "tags": [
+    "sql",
+    "create",
+    "ddl",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8014",
+   "deck": "09 DSB8 SQL",
+   "front": "Зачем `DROP TABLE IF EXISTS t` перед CREATE?",
+   "back": "Чтобы ячейку можно было **перезапускать**.\n\n- `CREATE TABLE t` падает, если t уже есть.\n- голый `DROP TABLE t` падает, если t ещё нет.\n- `IF EXISTS` = «есть → снеси, нет → молча пройди мимо».",
+   "tags": [
+    "sql",
+    "ddl"
+   ]
+  },
+  {
+   "id": "s8015",
+   "deck": "09 DSB8 SQL",
+   "front": "Разница двух дат в часах в SQLite (+ если дата — число?)",
+   "back": "`(JULIANDAY(d2) - JULIANDAY(d1)) * 24` — разница в днях × 24 = часы.\n📌 Скобки вокруг разницы! `*24` иначе прилипнет к одному члену.\n\n⚠️ Если поле — **unix-timestamp** (число секунд от 1970): сначала `datetime(поле, 'unixepoch')`, иначе `JULIANDAY(число)` = `NULL`.",
+   "tags": [
+    "sql",
+    "dates",
+    "julianday",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8016",
+   "deck": "09 DSB8 SQL",
+   "front": "Приклеить счётчик (COUNT/MIN по юзеру), не размножив строки?",
+   "back": "Сначала **схлопнуть** подзапросом в одну строку на юзера, потом JOIN по uid:\n```\nJOIN (SELECT uid, COUNT(*) AS cnt\n      FROM pageviews GROUP BY uid) AS pv\n  ON t.uid = pv.uid\n```\nПрямой JOIN сырой таблицы **размножает** строки (как дубли в ex02).",
+   "tags": [
+    "sql",
+    "subquery",
+    "join",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8017",
+   "deck": "09 DSB8 SQL",
+   "front": "4 базовых агрегата SQL",
+   "back": "- `MIN(x)` — минимум\n- `MAX(x)` — максимум\n- `AVG(x)` — среднее\n- `COUNT(*)` — число строк\n\n(+ `SUM`). Все **схлопывают кучку в одно число**. Без GROUP BY — одна куча на всё.",
+   "tags": [
+    "sql",
+    "aggregate"
+   ]
+  },
+  {
+   "id": "s8018",
+   "deck": "09 DSB8 SQL",
+   "front": "Корреляция: шкала, знак, величина",
+   "back": "Диапазон **−1 … +1**.\n- **Знак**: `+` растут вместе (рост↔вес), `−` одно↑ другое↓ (мороз↔какао), `0` нет связи.\n- **Величина**: ближе к ±1 — чётче. 0.2–0.4 = слабая.\n\n⚠️ Малая выборка и выбросы врут. Корреляция ≠ причинность!",
+   "tags": [
+    "ds",
+    "correlation",
+    "priority"
+   ]
+  },
+  {
+   "id": "s8019",
+   "deck": "09 DSB8 SQL",
+   "front": "Как корреляция меряет связь (механика)?",
+   "back": "Прицел (крест) в средних `(X̄, Ȳ)` → 4 угла:\n- точка где **оба выше** или **оба ниже** средних → голос **«+»**\n- одно выше, другое ниже → голос **«−»**\n\nСумма голосов (дальние точки весомее) → знак и сила. Меряем от **центра/средних**, не от наклонной линии.",
+   "tags": [
+    "ds",
+    "correlation"
+   ]
+  },
+  {
+   "id": "s8020",
+   "deck": "09 DSB8 SQL",
+   "front": "DataFrame в памяти vs таблица в базе",
+   "back": "- **DataFrame** — в памяти Python, исчезнет с ядром.\n- **Таблица** — в файле `.sqlite`, доступна в следующих упражнениях.\n\n`read_sql` читает таблицу → DataFrame. `to_sql` / `CREATE TABLE` пишет обратно в базу. `connect` = труба к файлу-базе.",
+   "tags": [
+    "sql",
+    "pandas",
     "priority"
    ]
   }
